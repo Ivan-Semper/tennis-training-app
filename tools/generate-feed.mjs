@@ -77,6 +77,14 @@ for (let i = 0; i < weeks * 7; i++) {
 if (!events.length) throw new Error('Geen trainingen gegenereerd');
 
 const ics = api.buildICS(events, cfg.name || 'Tennis training');
-fs.writeFileSync(path.join(root, 'schema.ics'), ics, 'utf8');
+
+/* DTSTAMP en SEQUENCE lopen mee met het moment van genereren. Voor een feed die in
+   git staat is dat onhandig: het bestand zou dan bij elke run wijzigen. Daarom
+   vastgezet, zodat schema.ics alleen verandert als het schema echt verandert. */
+const stable = ics
+  .replace(/^DTSTAMP:[^\r\n]*/gm, 'DTSTAMP:20200101T000000Z')
+  .replace(/^SEQUENCE:[^\r\n]*/gm, 'SEQUENCE:0');
+
+fs.writeFileSync(path.join(root, 'schema.ics'), stable, 'utf8');
 
 console.log(`schema.ics geschreven: ${events.length} afspraken, ${weeks} weken vanaf ${api.iso(from)}`);

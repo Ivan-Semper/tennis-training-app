@@ -3,6 +3,8 @@
 Single-file trainingsapp voor tennis: 12-weeks periodiseringsschema, logboek en export
 van de planning naar je agenda (ICS, tijdzone Europe/Amsterdam).
 
+**Live:** https://ivan-semper.github.io/tennis-training-app/
+
 ## Wat het is
 
 Eén HTML-bestand zonder backend. Alle gegevens staan lokaal in `localStorage` van de
@@ -35,7 +37,7 @@ De GitHub Actions workflow bouwt bij elke push naar `main` een container en publ
 die naar GitHub Packages:
 
 ```
-ghcr.io/afasgroep/tennis-training-app:latest
+ghcr.io/ivan-semper/tennis-training-app:latest
 ```
 
 De container draait nginx als niet-root gebruiker en luistert op poort **8080**.

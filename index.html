@@ -1015,7 +1015,14 @@ function renderSettings(){
       '<div style="margin-top:12px"><button class="btn small" id="saveStart">Opslaan</button></div>'+
     '</div>'+
 
-    '<div class="card"><h2>📅 Agenda-synchronisatie</h2>'+
+    '<div class="card"><h2>� Automatisch in je agenda</h2>'+
+      '<div class="small muted" style="line-height:1.65;margin-bottom:12px">Abonneer je één keer, daarna komt je hele trainingsschema vanzelf in je Apple Agenda — ook alle toekomstige weken. Je hoeft nooit meer iets te importeren.</div>'+
+      '<div style="margin-top:4px"><button class="btn block" id="subBtn">📅 Abonneren op mijn trainingsagenda</button></div>'+
+      '<div class="tiny muted" style="margin-top:10px;line-height:1.6">Je iPhone vraagt één keer om bevestiging. Zet daarna in de Agenda-app bij <b>Vernieuwen</b> de frequentie op <i>Elk uur</i> of <i>Elke dag</i>.<br>'+
+      'De feed gebruikt vaste standaardtijden. Wil je andere tijden of andere weken? Gebruik dan de handmatige export hieronder.</div>'+
+    '</div>'+
+
+    '<div class="card"><h2>📅 Handmatige agenda-export</h2>'+
       '<div class="small muted" style="margin-bottom:4px">Zet je hele trainingsschema als afspraken in je iPhone-agenda, inclusief alle oefeningen in de omschrijving.</div>'+
       '<label class="f">Starttijd per dag</label>'+
       '<div class="timegrid">'+
@@ -1072,6 +1079,11 @@ function renderSettings(){
     if(!v) return;
     DB.settings.startDate = iso(mondayOf(parseISO(v)));
     save(); toast('Startdatum opgeslagen'); render();
+  };
+
+  document.getElementById('subBtn').onclick=()=>{
+    const url = location.origin + location.pathname.replace(/[^/]*$/, '') + 'schema.ics';
+    location.href = 'webcal://' + url.replace(/^https?:\/\//, '');
   };
 
   /* --- agenda-instellingen --- */
@@ -1318,18 +1330,25 @@ function toast(msg){
   clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),1800);
 }
 
-document.querySelectorAll('nav.bottom button').forEach(b=> b.onclick=()=>setView(b.dataset.view));
-document.getElementById('fab').onclick=()=>{
-  const today=todayISO(), w=planWeek(today), plan=buildWeek(w);
-  const di=(new Date().getDay()+6)%7;
-  const blocks=plan.days[di].blocks;
-  const idx=blocks.findIndex((b,bi)=>!DB.sessions.some(s=>s.planKey===today+'#'+bi));
-  if(idx>=0 && !plan.days[di].rest) openSession(prefillFromPlan(today,idx));
-  else openSession(null);
-};
-document.getElementById('modal').querySelector('.backdrop').onclick=closeSheet;
-save();
-render();
+/* ---------- 12. START ----------
+   Alleen opstarten in de browser. Het bouwscript voor de agendafeed laadt
+   dit bestand buiten de browser en gebruikt dan alleen de planningsfuncties. */
+if(typeof document !== 'undefined'){
+  document.querySelectorAll('nav.bottom button').forEach(b=> b.onclick=()=>setView(b.dataset.view));
+  document.getElementById('fab').onclick=()=>{
+    const today=todayISO(), w=planWeek(today), plan=buildWeek(w);
+    const di=(new Date().getDay()+6)%7;
+    const blocks=plan.days[di].blocks;
+    const idx=blocks.findIndex((b,bi)=>!DB.sessions.some(s=>s.planKey===today+'#'+bi));
+    if(idx>=0 && !plan.days[di].rest) openSession(prefillFromPlan(today,idx));
+    else openSession(null);
+  };
+  document.getElementById('modal').querySelector('.backdrop').onclick=closeSheet;
+  save();
+  render();
+}else if(typeof globalThis !== 'undefined'){
+  globalThis.__schedule = { DB, calEventsForDate, buildICS, buildWeek, planWeek, iso, addDays, parseISO, mondayOf, DEFAULT_CAL_TIMES };
+}
 </script>
 </body>
 </html>

@@ -1,5 +1,8 @@
 *.json
 !package.json
+!calendar-config.json
 *.ics
+!schema.ics
 .DS_Store
 Thumbs.db
+node_modules/

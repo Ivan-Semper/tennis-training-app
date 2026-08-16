@@ -1,0 +1,45 @@
+name: Update agendafeed
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'calendar-config.json'
+      - 'tools/generate-feed.mjs'
+  schedule:
+    # elke 1e van de maand, zodat het venster van 2 jaar blijft meeschuiven
+    - cron: '0 3 1 * *'
+  workflow_dispatch:
+
+jobs:
+  feed:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Genereer schema.ics
+        env:
+          TZ: UTC
+        run: node tools/generate-feed.mjs
+
+      - name: Commit als er iets gewijzigd is
+        run: |
+          if git diff --quiet -- schema.ics; then
+            echo "Geen wijzigingen in de agendafeed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add schema.ics
+          git commit -m "Agendafeed bijgewerkt"
+          git push

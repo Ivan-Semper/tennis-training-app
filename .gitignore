@@ -1,0 +1,5 @@
+*.json
+!package.json
+*.ics
+.DS_Store
+Thumbs.db

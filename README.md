@@ -1,7 +1,8 @@
 # tennis-training-app
 
-Single-file trainingsapp voor tennis: 12-weeks periodiseringsschema, logboek en export
-van de planning naar je agenda (ICS, tijdzone Europe/Amsterdam).
+Single-file trainingsapp: maak je eigen trainingen aan (kracht, cardio, tennis),
+bewaar ze en log of plan ze op een dag. Inclusief logboek, statistieken en
+agenda-export (ICS, tijdzone Europe/Amsterdam).
 
 **Live:** https://ivan-semper.github.io/tennis-training-app/
 
@@ -10,17 +11,31 @@ van de planning naar je agenda (ICS, tijdzone Europe/Amsterdam).
 Eén HTML-bestand zonder backend. Alle gegevens staan lokaal in `localStorage` van de
 browser waarin je de app opent. Er wordt niets naar een server gestuurd.
 
-- **Dashboard** — weekvoortgang, statistieken en grafieken
-- **Schema** — het 12-weeks schema met fases, deload-weken en dagblokken
-- **Logboek** — afgeronde sessies per maand, filterbaar per type
-- **Instellingen** — startdatum, agendatijden per dag, herinneringen, back-up/herstel
+- **Dashboard** — weekvoortgang, geplande trainingen, statistieken en grafieken
+- **Trainingen** — je eigen bibliotheek met opgeslagen trainingen
+- **Logboek** — afgeronde sessies per maand, filterbaar per soort
+- **Instellingen** — weekdoel, agendatijd/herinnering, back-up en herstel
+
+## Trainingen aanmaken
+
+In het tabblad **Trainingen** maak je een training aan in één van drie soorten:
+
+| Soort | Wat je invult |
+| --- | --- |
+| 🏋️ Kracht | Lijst oefeningen met sets en reps (kg vul je in bij het loggen) |
+| 🏃 Cardio | Soort (hardlopen, fietsen, roeien, …), standaardafstand en duur |
+| 🎾 Tennis | Duur en aandachtspunten die je tijdens het loggen kunt afvinken |
+
+Een opgeslagen training tik je later gewoon aan en zet je op een datum:
+**Nu loggen** (afgerond) of **Inplannen** (staat als gepland op je dashboard).
+Via **Bewaar als training** kun je ook een losse sessie omzetten naar een sjabloon.
 
 ## Agenda-export
 
-In **Instellingen** stel je per dag een starttijd in, hoeveel minuten vooraf je een
-herinnering wilt en hoeveel weken vooruit geëxporteerd wordt. De knop *Exporteren*
-maakt een `.ics`-bestand. Op iOS opent dat het deelmenu, waar je direct **Agenda**
-kunt kiezen. Per dag of per week exporteren kan vanuit het tabblad **Schema**.
+Elke sessie heeft een knop **📅 In agenda**; in Instellingen exporteer je alle
+geplande trainingen in één keer. Op iOS opent het deelmenu, waar je direct
+**Agenda** kunt kiezen. Afspraken hebben een vast ID, dus opnieuw exporteren
+werkt bestaande afspraken bij in plaats van ze te dupliceren.
 
 ## Lokaal draaien
 

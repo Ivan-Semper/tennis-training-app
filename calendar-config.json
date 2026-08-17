@@ -1,8 +1,0 @@
-{
-  "name": "Tennis training — Ivan",
-  "startDate": "2026-08-10",
-  "times": ["18:00", "07:00", "18:00", "18:00", "18:00", "10:00", "10:00"],
-  "reminderMinutes": 60,
-  "includeRestDays": false,
-  "weeks": 104
-}

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="nl">
 <head>
 <meta charset="utf-8" />
@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="mobile-web-app-capable" content="yes" />
-<title>Tennis Training — Ivan</title>
+<title>Training — Ivan</title>
 <style>
 :root{
   --bg:#0e1512;
@@ -18,19 +18,16 @@
   --ink:#eaf5ef;
   --muted:#8fa89d;
   --accent:#38e08b;
-  --accent2:#1f6f43;
   --tennis:#38e08b;
-  --gym:#f5b74a;
-  --run:#4aa8f5;
-  --mob:#b98cf5;
-  --match:#f56a6a;
+  --kracht:#f5b74a;
+  --cardio:#4aa8f5;
   --danger:#ff6b6b;
   --radius:16px;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0;color-scheme:dark}
 input[type=range]{accent-color:var(--accent);height:28px}
-input[type=date],input[type=number]{color-scheme:dark}
+input[type=date],input[type=number],input[type=time]{color-scheme:dark}
 body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
   background:var(--bg); color:var(--ink);
@@ -71,7 +68,7 @@ main{padding:16px 14px 24px;max-width:720px;margin:0 auto}
 .small{font-size:12px}
 .tiny{font-size:11px}
 
-/* ---------- hero / week progress ---------- */
+/* ---------- hero ---------- */
 .hero{
   background:linear-gradient(150deg,#1c3a2b 0%, #16261f 60%);
   border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:14px;
@@ -108,37 +105,31 @@ main{padding:16px 14px 24px;max-width:720px;margin:0 auto}
 .bar{height:8px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden;margin-top:6px}
 .bar > i{display:block;height:100%;border-radius:999px;background:var(--accent)}
 
-/* ---------- day / session items ---------- */
-.day{border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden;background:var(--card)}
-.day.rest{opacity:.72}
-.day-head{display:flex;align-items:center;gap:10px;padding:13px 14px;cursor:pointer}
-.day-head .d{font-size:14px;font-weight:700;flex:1}
-.day-head .meta{font-size:11px;color:var(--muted)}
-.chev{color:var(--muted);font-size:12px;transition:transform .18s}
-.day.open .chev{transform:rotate(90deg)}
-.day-body{display:none;padding:0 14px 14px;border-top:1px solid var(--line)}
-.day.open .day-body{display:block}
-.blockitem{padding:11px 0;border-bottom:1px dashed rgba(255,255,255,.07)}
-.blockitem:last-child{border-bottom:none}
-.blockitem .bt{display:flex;gap:8px;align-items:baseline}
-.blockitem .bt b{font-size:14px}
-.blockitem ul{margin:6px 0 0;padding-left:17px}
-.blockitem li{font-size:13px;line-height:1.5;color:#cfe0d7;margin-bottom:3px}
+/* ---------- tags ---------- */
 .tag{font-size:10px;padding:3px 8px;border-radius:999px;font-weight:700;letter-spacing:.4px;text-transform:uppercase}
 .t-tennis{background:rgba(56,224,139,.15);color:var(--tennis)}
-.t-gym{background:rgba(245,183,74,.15);color:var(--gym)}
-.t-run{background:rgba(74,168,245,.15);color:var(--run)}
-.t-mobility{background:rgba(185,140,245,.15);color:var(--mob)}
-.t-match{background:rgba(245,106,106,.15);color:var(--match)}
-.t-rust{background:rgba(255,255,255,.08);color:var(--muted)}
+.t-kracht{background:rgba(245,183,74,.15);color:var(--kracht)}
+.t-cardio{background:rgba(74,168,245,.15);color:var(--cardio)}
+.t-plan{background:rgba(255,255,255,.08);color:var(--muted)}
 
+/* ---------- sessie-items ---------- */
 .sess{display:flex;gap:11px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:13px;margin-bottom:9px;background:var(--card)}
+.sess.planned{border-style:dashed;opacity:.9}
 .sess .ic{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex:0 0 auto}
 .sess .body{flex:1;min-width:0}
 .sess .ttl{font-size:14px;font-weight:600}
 .sess .sub{font-size:12px;color:var(--muted);margin-top:2px}
 .sess .note{font-size:12.5px;color:#cfe0d7;margin-top:6px;white-space:pre-wrap;word-break:break-word}
 .rpe{font-size:11px;font-weight:700;padding:3px 7px;border-radius:8px;background:rgba(255,255,255,.07);color:var(--muted)}
+
+/* ---------- trainingskaarten ---------- */
+.tpl{display:flex;gap:11px;align-items:flex-start;padding:13px;border:1px solid var(--line);border-radius:14px;margin-bottom:9px;background:var(--card);cursor:pointer}
+.tpl .ic{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:17px;flex:0 0 auto}
+.tpl .body{flex:1;min-width:0}
+.tpl .ttl{font-size:15px;font-weight:700}
+.tpl .sub{font-size:12px;color:var(--muted);margin-top:3px}
+.tpl .det{font-size:11.5px;color:#cfe0d7;margin-top:6px;line-height:1.5}
+.tpl .go{color:var(--muted);font-size:16px;align-self:center}
 
 /* ---------- buttons ---------- */
 .btn{
@@ -189,12 +180,6 @@ textarea{min-height:84px;resize:vertical;line-height:1.5}
 .seg button.on{background:var(--accent);border-color:var(--accent);color:#082114}
 .inline{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .inline3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-.timegrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.timecell{display:flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--line);border-radius:11px;padding:6px 8px}
-.timecell span{font-size:12px;font-weight:700;color:var(--muted);width:22px;flex:0 0 auto}
-.timecell input{border:none;background:transparent;padding:4px 0;font-size:15px}
-.timecell input:focus{border:none}
-.btn.block{width:100%}
 
 /* ---------- modal ---------- */
 .modal{position:fixed;inset:0;z-index:100;display:none}
@@ -209,17 +194,17 @@ textarea{min-height:84px;resize:vertical;line-height:1.5}
 .grab{width:40px;height:4px;border-radius:99px;background:#3a5a4d;margin:8px auto 4px}
 .sheet h2{font-size:17px;margin:6px 0 2px}
 
-/* ---------- gym rows ---------- */
+/* ---------- oefening- en focusrijen ---------- */
 .exrow{display:grid;grid-template-columns:1fr 46px 46px 56px 30px;gap:6px;margin-bottom:7px;align-items:center}
 .exrow input{padding:9px 8px;font-size:14px;border-radius:9px}
 .exrow .del{background:none;border:none;color:var(--danger);font-size:18px;cursor:pointer;padding:0}
 .exhead{display:grid;grid-template-columns:1fr 46px 46px 56px 30px;gap:6px;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.exrow.noweight{grid-template-columns:1fr 46px 46px 30px}
+.exhead.noweight{grid-template-columns:1fr 46px 46px 30px}
 
-.weeknav{display:flex;align-items:center;gap:8px;margin-bottom:12px}
-.weeknav button{background:var(--card2);border:1px solid var(--line);color:var(--ink);border-radius:11px;width:42px;height:42px;font-size:17px;cursor:pointer}
-.weeknav .info{flex:1;text-align:center}
-.weeknav .info b{display:block;font-size:15px}
-.weeknav .info span{font-size:11px;color:var(--muted)}
+.focusrow{display:grid;grid-template-columns:30px 1fr 30px;gap:6px;margin-bottom:7px;align-items:center}
+.focusrow input[type=text]{padding:9px 10px;font-size:14px;border-radius:9px}
+.focusrow .del{background:none;border:none;color:var(--danger);font-size:18px;cursor:pointer;padding:0}
 
 .empty{text-align:center;color:var(--muted);font-size:13px;padding:22px 10px;line-height:1.6}
 .check{width:26px;height:26px;border-radius:8px;border:1.5px solid var(--line);background:var(--bg2);display:flex;align-items:center;justify-content:center;color:transparent;font-size:14px;cursor:pointer;flex:0 0 auto}
@@ -241,22 +226,22 @@ hr.sep{border:none;border-top:1px solid var(--line);margin:16px 0}
       <h1 id="topTitle">Dashboard</h1>
       <div class="sub" id="topSub">—</div>
     </div>
-    <div class="pill" id="topPill">Week 1</div>
+    <div class="pill" id="topPill">—</div>
   </div>
 </header>
 
 <main>
   <section id="view-dash" class="view active"></section>
-  <section id="view-schema" class="view"></section>
+  <section id="view-trainingen" class="view"></section>
   <section id="view-log" class="view"></section>
   <section id="view-settings" class="view"></section>
 </main>
 
-<button class="fab" id="fab" aria-label="Sessie toevoegen">+</button>
+<button class="fab" id="fab" aria-label="Training loggen">+</button>
 
 <nav class="bottom">
   <button data-view="dash" class="active"><span class="i">📊</span>Dashboard</button>
-  <button data-view="schema"><span class="i">📅</span>Schema</button>
+  <button data-view="trainingen"><span class="i">📋</span>Trainingen</button>
   <button data-view="log"><span class="i">📝</span>Logboek</button>
   <button data-view="settings"><span class="i">⚙️</span>Instellingen</button>
 </nav>
@@ -270,269 +255,139 @@ hr.sep{border:none;border-top:1px solid var(--line);margin:16px 0}
 
 <script>
 /* ============================================================
-   TENNIS TRAINING APP — single file, data in localStorage
+   TRAINING APP — single file, data in localStorage
+   Eigen trainingen aanmaken, opslaan en loggen.
    ============================================================ */
 
 /* ---------- 1. OPSLAG ---------- */
-const KEY = 'ivan-tennis-app-v1';
-const DEFAULT_CAL_TIMES = ['18:00','07:00','18:00','18:00','18:00','10:00','10:00'];
-const DEFAULTS = { settings:{ startDate:null, weeklyGoal:5, calTimes:null, calReminder:60, calWeeks:12, calRest:false }, sessions:[] };
+const KEY = 'ivan-training-app-v2';
+const OLD_KEY = 'ivan-tennis-app-v1';
+const DEFAULTS = {
+  settings:{ weeklyGoal:4, defaultTime:'18:00', calReminder:60 },
+  templates: [],
+  sessions: []
+};
 let DB = loadDB();
+
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
 
 function loadDB(){
   try{
+    localStorage.removeItem(OLD_KEY);
     const raw = localStorage.getItem(KEY);
-    if(!raw) return seed();
+    if(!raw) return JSON.parse(JSON.stringify(DEFAULTS));
     const d = JSON.parse(raw);
-    d.settings = Object.assign({}, DEFAULTS.settings, d.settings||{});
-    d.sessions = d.sessions||[];
-    if(!d.settings.startDate) d.settings.startDate = iso(mondayOf(new Date()));
+    d.settings  = Object.assign({}, DEFAULTS.settings, d.settings||{});
+    d.templates = Array.isArray(d.templates)? d.templates : [];
+    d.sessions  = Array.isArray(d.sessions)?  d.sessions  : [];
     return d;
-  }catch(e){ return seed(); }
-}
-function seed(){
-  const d = JSON.parse(JSON.stringify(DEFAULTS));
-  d.settings.startDate = iso(mondayOf(new Date()));
-  return d;
+  }catch(e){ return JSON.parse(JSON.stringify(DEFAULTS)); }
 }
 function save(){ localStorage.setItem(KEY, JSON.stringify(DB)); }
 
 /* ---------- 2. DATUM HELPERS ---------- */
 const DAYNAMES = ['Maandag','Dinsdag','Woensdag','Donderdag','Vrijdag','Zaterdag','Zondag'];
-const DAYSHORT = ['Ma','Di','Wo','Do','Vr','Za','Zo'];
 const MONTHS = ['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
+const DAYSHORT = ['Ma','Di','Wo','Do','Vr','Za','Zo'];
 
 function pad(n){ return String(n).padStart(2,'0'); }
 function iso(d){ return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
 function parseISO(s){ const p=String(s).split('-').map(Number); return new Date(p[0],p[1]-1,p[2]); }
 function mondayOf(d){ const x=new Date(d); const off=(x.getDay()+6)%7; x.setDate(x.getDate()-off); x.setHours(0,0,0,0); return x; }
 function addDays(d,n){ const x=new Date(d); x.setDate(x.getDate()+n); return x; }
-function daysBetween(a,b){ return Math.round((mondayOf(b)-mondayOf(a))/86400000); }
 function fmtDate(s){ const d=parseISO(s); return DAYSHORT[(d.getDay()+6)%7]+' '+d.getDate()+' '+MONTHS[d.getMonth()]; }
 function todayISO(){ return iso(new Date()); }
 
-/* plan-weeknummer (1..12, daarna nieuwe ronde) op basis van startdatum */
-function absWeek(dateStr){
-  const diff = Math.floor((mondayOf(parseISO(dateStr)) - mondayOf(parseISO(DB.settings.startDate)))/86400000);
-  return Math.floor(diff/7)+1;
-}
-function planWeek(dateStr){
-  let w = absWeek(dateStr);
-  if(w<1) return 1;
-  return ((w-1)%12)+1;
-}
-function roundNr(dateStr){ const w=absWeek(dateStr); return w<1?1:Math.floor((w-1)/12)+1; }
-
-/* ---------- 3. TRAININGSSCHEMA (12 weken, 5 dagen p/w) ---------- */
-const PHASES = [
-  {name:'Fundament',   weeks:[1,2,3,4],   doel:'Belastbaarheid, techniek herstellen, aerobe basis'},
-  {name:'Ontwikkeling',weeks:[5,6,7,8],   doel:'Meer intensiteit, kracht opbouwen, patronen inslijpen'},
-  {name:'Intensivering',weeks:[9,10,11,12],doel:'Explosiviteit, wedstrijdvormen, alles samenvoegen'}
-];
-const DELOADS = [4,8,12];
-
-const WEEKDATA = [
-  { theme:'Consistentie & baanpositie', note:'Rustig starten. Doel is ritme, geen power. 10 ballen op rij is beter dan 1 winner.',
-    a:['Crosscourt forehand 4×6\' — doel 10+ ballen op rij, 1,5 m boven het net','Crosscourt backhand 4×6\' — zelfde doel','Rally op halve kracht (70%) 2×8\' — herstelpositie na elke bal','Service: 40 ballen, alleen ritme en toss'],
-    b:['Longline forehand 3×6\' + longline backhand 3×6\'','Kruispatroon: 2 cross, 1 longline (afwisselend) 3×6\'','Diepteoefening: alle ballen achter de servicelijn, 2×8\'','Return: 30 returns diep in het midden'],
-    m:['20\' inspelen + service','2 sets tot 4 games (of 40 min vrij spelen) op 80% intensiteit','Focus: elke bal terug + herstelpositie','Na afloop: 10 min uitlopen'],
-    r1:'35 min rustige duurloop, Zone 2 (je kunt praten)', r2:'Voetenwerk: 6×20 m zijwaarts + 6× spider drill, 8×60 m opbouwsprint (60% herstel)'},
-  { theme:'Diepte & lengte', note:'Alles achter de servicelijn. Diepte is jouw wapen om de basis te leggen.',
-    a:['Crosscourt met dieptezone (achterste 3 m) 4×6\'','Backhand crosscourt idem 3×6\'','Rally 2×10\': elke bal die kort valt = min 1 punt','Service: 3×10 eerste opslagen wide + 3×10 T'],
-    b:['Neutraal-naar-aanval: 3 diepe ballen, dan aanval 3×6\'','Backhand richting wisselen op signaal 3×6\'','Approach + eerste volley 2×6\'','Return: 20 returns cross, 20 returns diep midden'],
-    m:['Inspelen 20\'','Tiebreaks: 3× tot 7 punten, dan 2 sets tot 4 games','Focus: gemiddelde ballengte hoog houden','Uitlopen + stretch 10\''],
-    r1:'40 min rustige duurloop Zone 2', r2:'Voetenwerk: 3×(4 hoeken shuttle) + 10×30 m sprints, volledig herstel'},
-  { theme:'Service & return', note:'Twee gratis punten per game beginnen hier. Veel herhaling, weinig intensiteit.',
-    a:['Service-blok 1: 60 ballen — 20 wide, 20 T, 20 body (eerste opslag)','Service-blok 2: 40 tweede opslagen met spin, kick over de servicelijn','Service + 1: 3×10 punten waarin je na de service direct aanvalt','Rally afsluiten 2×8\''],
-    b:['Return-blok: 40 returns tegen eerste opslag (blok, kort), 40 tegen tweede (stap in)','Return + 1: 3×10 punten, jij begint met de return','Crosscourt rally 3×6\' op tempo','Volley-ladder 2×5\''],
-    m:['Inspelen 20\'','Servicegames spelen: 6 games alleen jouw service, dan 6 games return','2 sets tot 4 games','Uitlopen'],
-    r1:'40 min duurloop Zone 2 + 4×20 sec versnelling aan het eind', r2:'Voetenwerk: split-step reactie 3×8, 12×20 m sprints uit split-step'},
-  { theme:'DELOAD — herstel & techniek', note:'Rustige week. Alles op ~65%. Lichaam laten aanpassen zodat je week 5 fris start.',
-    a:['Rustig inspelen 15\'','Crosscourt rally op 60% 3×6\' — puur techniek en timing','Service: 30 ballen, alleen gevoel','Uitrollen/stretchen 10\''],
-    b:['Rally rustig 3×6\'','Slice, dropshot, lob: 15 min speelvormen','Volley + smash rustig 10\'','Losse punten zonder score 15\''],
-    m:['Vrij spelen 60-75 min zonder score, veel variatie','Focus: plezier en gevoel'],
-    r1:'25 min heel rustig lopen of fietsen', r2:'Mobiliteit 30 min: heupen, enkels, thoracaal + rustige core'},
-  { theme:'Aanvallen vanaf de baseline', note:'Fase 2 start: je gaat kortere ballen straffen en het initiatief nemen.',
-    a:['Feed korte bal → inside-out forehand 4×8 ballen ×3','Aanvalspatroon: cross-cross-longline winner 3×6\'','Live rally waarbij korte bal = verplicht aanvallen 3×6\'','Service + forehand 2×10 punten'],
-    b:['Backhand langs de lijn onder druk 3×6\'','Van verdediging naar aanval: 1 hoge slice, dan aanvallen 3×6\'','Approach shot + volley afmaken 3×6\'','Return + aanval 2×10 punten'],
-    m:['Inspelen 20\'','3 sets tot 4 games, opdracht: min. 1 aanval per game','Score los bijhouden: hoeveel aanvallen won je?','Uitlopen'],
-    r1:'45 min duurloop Zone 2', r2:'Intervallen: 8×400 m op 5 km-tempo, 90 sec pauze + voetenwerkladder'},
-  { theme:'Verdediging & herstel in de rally', note:'Punten winnen die je "verloren" was. Hoog, diep, tijd kopen.',
-    a:['Hoge diepe verdediging: coach speelt hoeken, jij overleeft 6×90 sec','Slice backhand diep 3×6\'','Van verdediging naar neutraal 3×8\'','Service 40 ballen'],
-    b:['Twee-tegen-één (of coach in de hoeken) 4×5\'','Lob + smash spel 15\'','Rally lang: 3×10\' zonder fout, minimaal 12 slagen','Return tegen zware service 30 ballen'],
-    m:['Inspelen 20\'','2 sets tot 6 games (met tiebreak)','Focus: 0 onnodige fouten in de eerste 4 slagen','Uitlopen'],
-    r1:'45 min duurloop Zone 2 + heuvel/tempo-stuk 10 min', r2:'Intervallen: 6×(45 sec hard / 75 sec rust) + 6 baanshuttles'},
-  { theme:'Patronen & tactiek', note:'Je speelt met een plan. Elke game start met een keuze.',
-    a:['Patroon 1: service wide → forehand in de opening, 3×10','Patroon 2: cross-cross-inside-out, 3×8\'','Patroon 3: diep midden om hoek weg te nemen, 3×6\'','Vrij punten spelen met vast patroon 15\''],
-    b:['Return-patroon: diep midden → tweede bal aanvallen 3×10','Backhand-duel winnen: 4×6\' backhand-only cross','Net-aanval afdwingen 3×6\'','Puntspel met tactische opdracht 15\''],
-    m:['Inspelen 20\'','3 sets tot 4 games — voor elke game hardop je tactiek kiezen','Kort notitieboek: wat werkte?','Uitlopen'],
-    r1:'50 min duurloop Zone 2', r2:'Intervallen: 10×200 m snel, 60 sec pauze + reactievoetenwerk 10\''},
-  { theme:'DELOAD — laden lossen', note:'Tweede deload. Volume omlaag, techniek scherp houden, batterij opladen.',
-    a:['Rustig inspelen 15\'','Techniekcheck forehand + backhand op 60% 3×6\'','Service 30 ballen op gevoel','Stretch 10\''],
-    b:['Rally rustig 3×6\'','Volley/smash 15\'','Punten zonder score 15\''],
-    m:['Vrij spelen 60 min, lage intensiteit, veel variatie'],
-    r1:'25-30 min heel rustig', r2:'Mobiliteit + core 30 min, geen sprints'},
-  { theme:'Explosiviteit & eerste 4 slagen', note:'Fase 3: kort, scherp, hoge kwaliteit. Wedstrijdsituaties nabootsen.',
-    a:['Eerste 4 slagen: service + return + 2 slagen, 5×10 punten','Explosief starten: split-step → eerste bal aanvallen 4×6\'','Service op snelheid: 3×10 eerste opslagen vol','Korte pauzes, hoge kwaliteit'],
-    b:['Return-druk: 5×10 punten die starten met return','Wisselspel: 3 slagen vol tempo, dan punt uitspelen 4×6\'','Net-afmaken onder druk 3×6\'','Tweede opslag onder druk: 20 ballen, 2e serve fout = 5 sprints'],
-    m:['Inspelen 20\'','Wedstrijdsimulatie: 1 volledige set (tot 6) + 1 tiebreak','Volledige routine tussen punten','Uitlopen'],
-    r1:'40 min rustig (herstel, niet hard)', r2:'Sprints: 12×20 m + 6×40 m volledig herstel, plyo op de baan'},
-  { theme:'Wedstrijdvormen & scorespanning', note:'Punten spelen met consequenties. Leer scherp blijven op 4-4.',
-    a:['Punten vanaf 30-30 en 4-4, 6 series','Service houden onder druk: verlies je punt, begin opnieuw','Aanvalspatroon herhalen 3×6\'','Service 40 ballen'],
-    b:['Breekpunten spelen (return-kant), 6 series','Lange rally-punten: elk punt start met 4 verplichte slagen','Netaanval afdwingen 3×6\'','Cooldown'],
-    m:['Inspelen 20\'','2 volledige sets tegen wisselende tegenstander','Statistiek bijhouden: 1e service %, winners/fouten','Uitlopen'],
-    r1:'40 min duurloop Zone 2', r2:'Intervallen: 6×(30 sec max / 90 sec rust) + voetenwerk hoeken'},
-  { theme:'Alles samen — hoogste kwaliteit', note:'Piekweek van dit blok. Kwaliteit boven kwantiteit, ga scherp de baan op.',
-    a:['Korte intensieve blokken: 6×5\' vol tempo met 2\' rust','Service + 1 op wedstrijdintensiteit 4×10 punten','Beste patroon perfectioneren 3×6\''],
-    b:['Return + 1 op wedstrijdintensiteit 4×10 punten','Rally op 90% met richtingcontrole 4×6\'','Afmaken aan het net 3×5\''],
-    m:['Inspelen 20\'','Oefenwedstrijd: best of 3 sets (korte derde set)','Volledige wedstrijdroutine','Uitlopen + evaluatie'],
-    r1:'35 min rustig herstelloopje', r2:'Sprints: 10×20 m + 4×40 m, kort en fris blijven'},
-  { theme:'DELOAD + evaluatie', note:'Afsluiten en meten. Noteer wat er verbeterd is en zet doelen voor de volgende ronde.',
-    a:['Rustig spelen 45\' techniek','Service 30 ballen','Stretch'],
-    b:['Vrij spelen 45\'','Evaluatie: schrijf 3 sterke punten en 3 verbeterpunten in de app'],
-    m:['1 set spelen op gevoel, daarna uitspelen zonder score','Testmoment: hoe voelt het lichaam vergeleken met week 1?'],
-    r1:'Test: 5 km op rustig-stevig tempo (noteer tijd!)', r2:'Mobiliteit 30 min + lichte core'}
-];
-
-const GYM_A = {
-  1:{label:'Kracht A — Benen & push', ex:[
-      {n:'Back squat (of goblet squat)',s:3,r:'10'},
-      {n:'Bulgarian split squat',s:3,r:'10 p/b'},
-      {n:'Bankdrukken of push-up +gewicht',s:3,r:'10'},
-      {n:'Pallof press (anti-rotatie)',s:3,r:'12 p/z'},
-      {n:'Kuitheffen langzaam zakken',s:3,r:'12'}]},
-  2:{label:'Kracht A — Benen & push', ex:[
-      {n:'Back squat',s:4,r:'8'},
-      {n:'Bulgarian split squat',s:3,r:'8 p/b'},
-      {n:'Bankdrukken',s:4,r:'8'},
-      {n:'Medicine ball rotatiegooi',s:3,r:'6 p/z'},
-      {n:'Pallof press',s:3,r:'12 p/z'}]},
-  3:{label:'Kracht A — Kracht & explosief', ex:[
-      {n:'Back squat zwaar',s:4,r:'5'},
-      {n:'Box jump',s:4,r:'4'},
-      {n:'Bankdrukken zwaar',s:4,r:'5'},
-      {n:'Medicine ball rotatiegooi explosief',s:3,r:'8 p/z'},
-      {n:'Pallof press',s:3,r:'10 p/z'}]},
-  0:{label:'Kracht A — Deload', ex:[
-      {n:'Goblet squat licht',s:2,r:'10'},
-      {n:'Split squat lichaamsgewicht',s:2,r:'10 p/b'},
-      {n:'Push-up',s:2,r:'12'},
-      {n:'Dead bug',s:2,r:'10 p/z'}]}
-};
-const GYM_B = {
-  1:{label:'Kracht B — Achterkant & pull', ex:[
-      {n:'Romanian deadlift',s:3,r:'10'},
-      {n:'Hip thrust',s:3,r:'12'},
-      {n:'Optrekken of lat pulldown',s:3,r:'8-10'},
-      {n:'Roeien 1-armig dumbbell',s:3,r:'10 p/a'},
-      {n:'Side plank + dead bug',s:3,r:'30 sec'}]},
-  2:{label:'Kracht B — Achterkant & pull', ex:[
-      {n:'Romanian deadlift',s:4,r:'8'},
-      {n:'Hip thrust',s:4,r:'8'},
-      {n:'Optrekken (+gewicht)',s:4,r:'6-8'},
-      {n:'Roeien 1-armig dumbbell',s:3,r:'8 p/a'},
-      {n:'Nordic curl / hamstring slider',s:3,r:'6'}]},
-  3:{label:'Kracht B — Kracht & explosief', ex:[
-      {n:'Deadlift / RDL zwaar',s:4,r:'5'},
-      {n:'Hip thrust zwaar',s:4,r:'6'},
-      {n:'Optrekken +gewicht',s:4,r:'5'},
-      {n:'Broadjump / horizontale sprong',s:4,r:'4'},
-      {n:'Nordic curl',s:3,r:'6'}]},
-  0:{label:'Kracht B — Deload', ex:[
-      {n:'Romanian deadlift licht',s:2,r:'10'},
-      {n:'Hip thrust lichaamsgewicht',s:2,r:'15'},
-      {n:'Lat pulldown licht',s:2,r:'12'},
-      {n:'Side plank',s:2,r:'30 sec'}]}
-};
-
-function phaseOf(w){
-  const p = PHASES.find(p=>p.weeks.includes(w));
-  return p||PHASES[0];
-}
-function isDeload(w){ return DELOADS.includes(w); }
-function gymLevel(w){ if(isDeload(w)) return 0; if(w<=3) return 1; if(w<=7) return 2; return 3; }
-
-/* bouwt het volledige weekplan */
-function buildWeek(w){
-  const d = WEEKDATA[w-1];
-  const dl = isDeload(w);
-  const gl = gymLevel(w);
-  const ga = GYM_A[gl], gb = GYM_B[gl];
-  const tennisDur = dl?60:90, matchDur = dl?70:120, gymDur = dl?35:55;
-  const days = [
-    { name:'Maandag', blocks:[
-      {type:'tennis', title:'Tennis — techniek', dur:tennisDur, items:['10\' inspelen + voetenwerk'].concat(d.a)},
-      {type:'gym', title:ga.label, dur:gymDur, ex:ga.ex,
-       items:ga.ex.map(e=>e.n+' — '+e.s+'×'+e.r).concat([dl?'Rustig tempo, RPE 5':'Laatste set zwaar maar technisch schoon'])}
-    ]},
-    { name:'Dinsdag', blocks:[
-      {type:'run', title:'Duurloop + core', dur:dl?30:50, items:[d.r1,'Core: 3× (plank 45\'\' / side plank 30\'\' p/z / dead bug 10 p/z)','Na afloop 5 min stretchen']}
-    ]},
-    { name:'Woensdag', rest:true, blocks:[
-      {type:'mobility', title:'Herstel (optioneel)', dur:20, items:['20 min mobiliteit: heupen, enkels, thoracale wervelkolom','Foam rollen quadriceps, kuiten, bilspieren','Of: 20-30 min wandelen']}
-    ]},
-    { name:'Donderdag', blocks:[
-      {type:'tennis', title:'Tennis — techniek & tactiek', dur:tennisDur, items:['10\' inspelen'].concat(d.b)},
-      {type:'gym', title:gb.label, dur:gymDur, ex:gb.ex,
-       items:gb.ex.map(e=>e.n+' — '+e.s+'×'+e.r).concat([dl?'Licht houden':'Rustig zakken, explosief omhoog'])}
-    ]},
-    { name:'Vrijdag', blocks:[
-      {type:'run', title:'Voetenwerk & intervallen', dur:dl?30:45, items:['10\' inlopen + dynamisch warm maken',d.r2,'5\' uitlopen + stretch']}
-    ]},
-    { name:'Zaterdag', blocks:[
-      {type:'match', title:'Matchplay', dur:matchDur, items:d.m}
-    ]},
-    { name:'Zondag', rest:true, blocks:[
-      {type:'mobility', title:'Rustdag', dur:15, items:['Volledig vrij','Eventueel 15 min stretchen of een wandeling','Sessie loggen mag, hoeft niet']}
-    ]}
-  ];
-  return { n:w, phase:phaseOf(w), deload:dl, theme:d.theme, note:d.note, days:days };
-}
-
-/* ---------- 4. TYPES ---------- */
+/* ---------- 3. TYPES ---------- */
 const TYPES = {
-  tennis:  {label:'Tennis',    icon:'🎾', color:'var(--tennis)'},
-  match:   {label:'Matchplay', icon:'🏆', color:'var(--match)'},
-  gym:     {label:'Gym',       icon:'🏋️', color:'var(--gym)'},
-  run:     {label:'Hardlopen', icon:'🏃', color:'var(--run)'},
-  mobility:{label:'Herstel',   icon:'🧘', color:'var(--mob)'}
+  kracht: {label:'Kracht', icon:'🏋️', hex:'#f5b74a'},
+  cardio: {label:'Cardio', icon:'🏃', hex:'#4aa8f5'},
+  tennis: {label:'Tennis', icon:'🎾', hex:'#38e08b'}
 };
+const TYPE_KEYS = ['kracht','cardio','tennis'];
+const CARDIO_KINDS = ['Hardlopen','Fietsen','Roeien','Zwemmen','Crosstrainer','Wandelen','Anders'];
 const FEELS = ['😖','😕','😐','🙂','🤩'];
 
-/* ---------- 5. BEREKENINGEN ---------- */
-function sessionsSorted(){ return DB.sessions.slice().sort((a,b)=> a.date<b.date?1:a.date>b.date?-1:(b.created||0)-(a.created||0)); }
-function weekRange(monday){ const s=iso(monday), e=iso(addDays(monday,6)); return [s,e]; }
-function sessionsInWeek(monday){ const [s,e]=weekRange(monday); return DB.sessions.filter(x=>x.date>=s&&x.date<=e); }
+function typeOf(t){ return TYPES[t] || TYPES.tennis; }
+
+/* ---------- 4. BEREKENINGEN ---------- */
+function doneSessions(){ return DB.sessions.filter(s=>s.done); }
+function sessionsSorted(list){
+  return (list||DB.sessions).slice().sort((a,b)=> a.date<b.date?1:a.date>b.date?-1:(b.created||0)-(a.created||0));
+}
+function sessionsInWeek(monday){
+  const s=iso(monday), e=iso(addDays(monday,6));
+  return doneSessions().filter(x=>x.date>=s&&x.date<=e);
+}
 function sumMin(list){ return list.reduce((t,x)=>t+(+x.minutes||0),0); }
 function sumKm(list){ return list.reduce((t,x)=>t+(+x.km||0),0); }
 function avg(list, f){ const v=list.map(f).filter(x=>x>0); return v.length? v.reduce((a,b)=>a+b,0)/v.length : 0; }
 function trainingDays(list){ return new Set(list.map(x=>x.date)).size; }
 function fmtMin(m){ m=Math.round(m); if(m<60) return m+' min'; const h=Math.floor(m/60), r=m%60; return h+'u'+(r?' '+r:''); }
-function minToTime(m){ m=((Math.round(m)%1440)+1440)%1440; return pad(Math.floor(m/60))+':'+pad(m%60); }
 function fmtHours(m){ return (m/60).toFixed(1).replace('.',',')+'u'; }
-function pace(km,min){ if(!km||!min) return null; const p=min/km; const mm=Math.floor(p), ss=Math.round((p-mm)*60); return mm+':'+pad(ss==60?0:ss)+' /km'; }
+function pace(km,min){ if(!km||!min) return null; const p=min/km; const mm=Math.floor(p), ss=Math.round((p-mm)*60); return mm+':'+pad(ss===60?0:ss)+' /km'; }
 function tonnage(s){ if(!s.ex) return 0; return s.ex.reduce((t,e)=> t + (+e.sets||0)*(+e.reps||0)*(+e.kg||0), 0); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
-function weekStreak(){
-  let streak=0; let m = mondayOf(new Date());
-  for(let i=0;i<200;i++){
-    const list = sessionsInWeek(m);
-    const days = trainingDays(list);
-    if(i===0 && days===0){ m=addDays(m,-7); continue; } // huidige week telt nog niet mee als leeg
-    if(days>=4){ streak++; m=addDays(m,-7); } else break;
-  }
-  return streak;
-}
 function dayStreak(){
   let streak=0; let d=new Date(); d.setHours(0,0,0,0);
-  const set = new Set(DB.sessions.map(s=>s.date));
+  const set = new Set(doneSessions().map(s=>s.date));
   if(!set.has(iso(d))) d = addDays(d,-1);
   while(set.has(iso(d))){ streak++; d=addDays(d,-1); }
   return streak;
 }
-function plannedDaysCount(w){ return buildWeek(w).days.filter(d=>!d.rest).length; }
+function weekStreak(){
+  const goal = +DB.settings.weeklyGoal||4;
+  let streak=0; let m = mondayOf(new Date());
+  for(let i=0;i<200;i++){
+    const days = trainingDays(sessionsInWeek(m));
+    if(i===0 && days===0){ m=addDays(m,-7); continue; }
+    if(days>=goal){ streak++; m=addDays(m,-7); } else break;
+  }
+  return streak;
+}
 
-const HEX = {tennis:'#38e08b', match:'#f56a6a', gym:'#f5b74a', run:'#4aa8f5', mobility:'#b98cf5'};
+/* ---------- 5. TRAININGEN (sjablonen) ---------- */
+function templatesOfType(t){ return DB.templates.filter(x=>x.type===t); }
+function templateById(id){ return DB.templates.find(t=>t.id===id)||null; }
+
+function templateSummary(t){
+  if(t.type==='kracht'){
+    const n=(t.ex||[]).length;
+    return n? n+' oefening'+(n===1?'':'en') : 'nog geen oefeningen';
+  }
+  if(t.type==='cardio'){
+    const parts=[t.cardioKind||'Cardio'];
+    if(+t.km) parts.push((+t.km).toFixed(1).replace('.',',')+' km');
+    if(+t.minutes) parts.push(t.minutes+' min');
+    return parts.join(' · ');
+  }
+  const n=(t.focus||[]).length;
+  return (+t.minutes? t.minutes+' min' : 'tennis') + (n? ' · '+n+' aandachtspunt'+(n===1?'':'en') : '');
+}
+function templateDetail(t){
+  if(t.type==='kracht') return (t.ex||[]).map(e=>e.name+' '+(e.sets||'')+'×'+(e.reps||'')).join(' · ');
+  if(t.type==='tennis') return (t.focus||[]).join(' · ');
+  return t.notes||'';
+}
+
+/* een nieuwe (nog niet opgeslagen) sessie op basis van een sjabloon */
+function sessionFromTemplate(t, date){
+  return {
+    id:null, created:null,
+    date: date||todayISO(),
+    time: DB.settings.defaultTime||'18:00',
+    type: t.type,
+    title: t.name,
+    templateId: t.id,
+    minutes: t.minutes||'',
+    km: t.type==='cardio' ? (t.km||'') : '',
+    cardioKind: t.type==='cardio' ? (t.cardioKind||CARDIO_KINDS[0]) : '',
+    ex: t.type==='kracht' ? (t.ex||[]).map(e=>({name:e.name,sets:e.sets,reps:e.reps,kg:''})) : [],
+    focus: t.type==='tennis' ? (t.focus||[]).map(f=>({t:f,d:false})) : [],
+    rpe:6, feel:0, notes:'', done:true
+  };
+}
 
 /* ---------- 6. DASHBOARD ---------- */
 function chartWeeks(n){
@@ -540,145 +395,135 @@ function chartWeeks(n){
   for(let i=n-1;i>=0;i--){
     const mm = addDays(m,-7*i);
     const list = sessionsInWeek(mm);
-    const per={}; Object.keys(TYPES).forEach(t=> per[t]=sumMin(list.filter(s=>s.type===t)));
+    const per={}; TYPE_KEYS.forEach(t=> per[t]=sumMin(list.filter(s=>s.type===t)));
     out.push({monday:mm, per:per, total:sumMin(list)});
   }
   return out;
 }
 function svgChart(data){
-  const W=340,H=150,pad=18,bw=(W-pad*2)/data.length;
+  const W=340,H=150,padX=18,bw=(W-padX*2)/data.length;
   const max=Math.max(60,...data.map(d=>d.total));
   let bars='',labels='',grid='';
   [0.5,1].forEach(f=>{
     const y=H-24-(H-44)*f;
-    grid+='<line x1="'+pad+'" x2="'+(W-pad)+'" y1="'+y+'" y2="'+y+'" stroke="rgba(255,255,255,.07)" stroke-width="1"/>';
+    grid+='<line x1="'+padX+'" x2="'+(W-padX)+'" y1="'+y+'" y2="'+y+'" stroke="rgba(255,255,255,.07)" stroke-width="1"/>';
   });
   data.forEach((d,i)=>{
-    const x=pad+i*bw+bw*0.18, bwid=bw*0.64;
+    const x=padX+i*bw+bw*0.18, bwid=bw*0.64;
     let y=H-24;
-    Object.keys(TYPES).forEach(t=>{
+    TYPE_KEYS.forEach(t=>{
       const mins=d.per[t]; if(!mins) return;
       const h=(H-44)*(mins/max);
       y-=h;
-      bars+='<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bwid.toFixed(1)+'" height="'+h.toFixed(1)+'" fill="'+HEX[t]+'" rx="2"/>';
+      bars+='<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bwid.toFixed(1)+'" height="'+h.toFixed(1)+'" fill="'+TYPES[t].hex+'" rx="2"/>';
     });
     if(d.total===0){
       bars+='<rect x="'+x.toFixed(1)+'" y="'+(H-27)+'" width="'+bwid.toFixed(1)+'" height="3" fill="rgba(255,255,255,.12)" rx="1.5"/>';
     }
-    const lbl = (d.monday.getDate())+'/'+(d.monday.getMonth()+1);
-    labels+='<text x="'+(pad+i*bw+bw/2).toFixed(1)+'" y="'+(H-8)+'" fill="#8fa89d" font-size="9" text-anchor="middle">'+lbl+'</text>';
-    if(d.total) labels+='<text x="'+(pad+i*bw+bw/2).toFixed(1)+'" y="'+(y-4).toFixed(1)+'" fill="#8fa89d" font-size="8.5" text-anchor="middle">'+Math.round(d.total/60*10)/10+'u</text>';
+    const lbl = d.monday.getDate()+'/'+(d.monday.getMonth()+1);
+    labels+='<text x="'+(padX+i*bw+bw/2).toFixed(1)+'" y="'+(H-8)+'" fill="#8fa89d" font-size="9" text-anchor="middle">'+lbl+'</text>';
+    if(d.total) labels+='<text x="'+(padX+i*bw+bw/2).toFixed(1)+'" y="'+(y-4).toFixed(1)+'" fill="#8fa89d" font-size="8.5" text-anchor="middle">'+Math.round(d.total/60*10)/10+'u</text>';
   });
   return '<svg class="chart" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none">'+grid+bars+labels+'</svg>';
 }
 function ring(pct,center,sub){
-  const r=42,c=2*Math.PI*r,off=c*(1-Math.min(1,pct));
+  const r=42,c=2*Math.PI*r,off=c*(1-Math.min(1,pct||0));
   return '<div class="ring"><svg width="96" height="96">'+
     '<circle cx="48" cy="48" r="'+r+'" stroke="rgba(255,255,255,.09)" stroke-width="9" fill="none"/>'+
     '<circle cx="48" cy="48" r="'+r+'" stroke="#38e08b" stroke-width="9" fill="none" stroke-linecap="round" stroke-dasharray="'+c.toFixed(1)+'" stroke-dashoffset="'+off.toFixed(1)+'"/>'+
     '</svg><div class="val"><b>'+center+'</b><span>'+sub+'</span></div></div>';
 }
-function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
 function renderDash(){
   const today = todayISO();
-  const w = planWeek(today), plan = buildWeek(w), rnd = roundNr(today);
   const monday = mondayOf(new Date());
   const week = sessionsInWeek(monday);
   const prevWeek = sessionsInWeek(addDays(monday,-7));
-  const goal = plannedDaysCount(w);
+  const goal = +DB.settings.weeklyGoal||4;
   const done = trainingDays(week);
-  const min = sumMin(week), km = sumKm(week.filter(s=>s.type==='run'));
+  const min = sumMin(week), km = sumKm(week.filter(s=>s.type==='cardio'));
   const rpe = avg(week, s=>+s.rpe||0), feel = avg(week, s=>+s.feel||0);
   const tonn = week.reduce((t,s)=>t+tonnage(s),0);
-  const tennisMin = sumMin(week.filter(s=>s.type==='tennis'||s.type==='match'));
-  const dIdx = (new Date().getDay()+6)%7;
-  const todayPlan = plan.days[dIdx];
-  const all = DB.sessions;
-  const allMin = sumMin(all), allKm = sumKm(all.filter(s=>s.type==='run'));
+  const tennisMin = sumMin(week.filter(s=>s.type==='tennis'));
+  const all = doneSessions();
+  const allMin = sumMin(all), allKm = sumKm(all.filter(s=>s.type==='cardio'));
 
-  /* vandaag */
-  let todayHTML = '';
-  const todayEvs = calEventsForDate(today);
-  todayPlan.blocks.forEach((b,bi)=>{
-    const pk = today+'#'+bi;
-    const s = DB.sessions.find(x=>x.planKey===pk);
-    const st = todayEvs[bi] ? minToTime(todayEvs[bi].start)+' · ' : '';
-    todayHTML += '<div class="blockitem"><div class="row" style="align-items:flex-start">'+
-      '<div style="flex:1"><div class="bt"><span class="tag t-'+b.type+'">'+TYPES[b.type].label+'</span><b>'+esc(b.title)+'</b></div>'+
-      '<div class="small muted" style="margin-top:4px">'+st+b.dur+' min'+(s?' · gelogd ✓':'')+'</div></div>'+
-      '<button class="check '+(s?'on':'')+'" data-quick="'+bi+'">✓</button></div></div>';
-  });
+  const planned = DB.sessions.filter(s=>!s.done && s.date>=today)
+    .sort((a,b)=> a.date<b.date?-1:a.date>b.date?1:String(a.time||'').localeCompare(String(b.time||'')));
+  const todayDone = all.filter(s=>s.date===today);
 
-  const last4 = DB.sessions.filter(s=> s.date >= iso(addDays(monday,-21)) );
+  const last4 = all.filter(s=> s.date >= iso(addDays(monday,-21)) );
   const per4 = {}; let tot4=0;
-  Object.keys(TYPES).forEach(t=>{ per4[t]=sumMin(last4.filter(s=>s.type===t)); tot4+=per4[t]; });
+  TYPE_KEYS.forEach(t=>{ per4[t]=sumMin(last4.filter(s=>s.type===t)); tot4+=per4[t]; });
 
-  const runs = all.filter(s=>s.type==='run' && +s.km>0);
-  const longest = runs.reduce((a,b)=> (+b.km>(a?+a.km:0)?b:a), null);
-  const fastest = runs.filter(s=>+s.km>=2 && +s.minutes>0).reduce((a,b)=> (!a || (b.minutes/b.km)<(a.minutes/a.km))?b:a, null);
+  const cardio = all.filter(s=>s.type==='cardio' && +s.km>0);
+  const longest = cardio.reduce((a,b)=> (+b.km>(a?+a.km:0)?b:a), null);
+  const fastest = cardio.filter(s=>+s.km>=2 && +s.minutes>0).reduce((a,b)=> (!a || (b.minutes/b.km)<(a.minutes/a.km))?b:a, null);
   const bestWeek = chartWeeks(26).reduce((a,b)=> b.total>(a?a.total:0)?b:a, null);
-
-  const recent = sessionsSorted().slice(0,6);
+  const recent = sessionsSorted(all).slice(0,6);
+  const dIdx = (new Date().getDay()+6)%7;
 
   document.getElementById('view-dash').innerHTML =
   '<div class="hero">'+
-    '<div class="phase">'+esc(plan.phase.name)+(plan.deload?' · deload':'')+(rnd>1?' · ronde '+rnd:'')+'</div>'+
-    '<div class="wk">Week '+w+' van 12</div>'+
-    '<div class="theme">'+esc(plan.theme)+'</div>'+
+    '<div class="phase">'+DAYNAMES[dIdx]+'</div>'+
+    '<div class="wk">'+(done>=goal?'Weekdoel gehaald 💪':'Deze week')+'</div>'+
+    '<div class="theme">'+(done?done+' trainingsdag'+(done===1?'':'en')+' · '+week.length+' sessies':'Nog niets gelogd deze week')+'</div>'+
     '<div class="ringwrap">'+
       ring(done/goal, done+'/'+goal, 'DAGEN')+
       '<div class="heromini">'+
         '<div class="mini"><div class="n">'+fmtHours(min)+'</div><div class="l">deze week</div></div>'+
-        '<div class="mini"><div class="n">'+km.toFixed(1).replace('.',',')+' km</div><div class="l">gelopen</div></div>'+
+        '<div class="mini"><div class="n">'+km.toFixed(1).replace('.',',')+' km</div><div class="l">cardio</div></div>'+
         '<div class="mini"><div class="n">'+(rpe?rpe.toFixed(1).replace('.',','):'–')+'</div><div class="l">gem. RPE</div></div>'+
         '<div class="mini"><div class="n">'+(feel?FEELS[Math.round(feel)-1]:'–')+'</div><div class="l">gevoel</div></div>'+
       '</div>'+
     '</div>'+
-    '<div class="small muted" style="margin-top:12px">'+esc(plan.note)+'</div>'+
   '</div>'+
 
-  '<div class="card"><div class="row" style="margin-bottom:10px"><h2 style="margin:0">Vandaag · '+DAYNAMES[dIdx]+'</h2>'+
-    (todayPlan.rest?'<span class="tag t-rust">Rustdag</span>':'')+'</div>'+
-    todayHTML+
-    '<div style="margin-top:12px"><button class="btn ghost small" id="goSchema">Hele week bekijken →</button></div>'+
+  '<div class="card"><div class="row" style="margin-bottom:10px"><h2 style="margin:0">Gepland</h2>'+
+    '<button class="btn ghost small" id="goTpl">Trainingen →</button></div>'+
+    (planned.length? planned.slice(0,6).map(sessHTML).join('')
+      : '<div class="empty">Niets gepland.<br>Kies een training in <b>Trainingen</b> en zet hem op een datum.</div>')+
+  '</div>'+
+
+  '<div class="card"><h2>Vandaag gelogd</h2>'+
+    (todayDone.length? todayDone.map(sessHTML).join('') : '<div class="empty">Nog niets gelogd vandaag. Tik op <b>+</b>.</div>')+
   '</div>'+
 
   '<div class="card"><h2>Deze week in cijfers</h2>'+
     '<div class="grid3">'+
       '<div class="stat"><div class="n">'+week.length+'</div><div class="l">sessies</div></div>'+
       '<div class="stat"><div class="n">'+fmtHours(tennisMin)+'</div><div class="l">tennis</div></div>'+
-      '<div class="stat"><div class="n">'+(tonn?Math.round(tonn/1000)+'<small> ton</small>':'–')+'</div><div class="l">gym volume</div></div>'+
+      '<div class="stat"><div class="n">'+(tonn?Math.round(tonn/1000)+'<small> ton</small>':'–')+'</div><div class="l">kracht volume</div></div>'+
     '</div>'+
     '<hr class="sep">'+
-    '<div class="small muted">Vorige week: '+fmtHours(sumMin(prevWeek))+' · '+trainingDays(prevWeek)+' dagen · '+sumKm(prevWeek.filter(s=>s.type==="run")).toFixed(1).replace('.',',')+' km</div>'+
+    '<div class="small muted">Vorige week: '+fmtHours(sumMin(prevWeek))+' · '+trainingDays(prevWeek)+' dagen · '+sumKm(prevWeek.filter(s=>s.type==='cardio')).toFixed(1).replace('.',',')+' km</div>'+
     '<div class="bar"><i style="width:'+Math.min(100, sumMin(prevWeek)? (min/sumMin(prevWeek))*100 : (min?100:0))+'%"></i></div>'+
-    '<div class="tiny muted" style="margin-top:6px">'+(sumMin(prevWeek)? (min>=sumMin(prevWeek)? '+'+Math.round((min/sumMin(prevWeek)-1)*100)+'% t.o.v. vorige week' : Math.round((min/sumMin(prevWeek)-1)*100)+'% t.o.v. vorige week') : 'Nog geen vergelijking')+'</div>'+
+    '<div class="tiny muted" style="margin-top:6px">'+(sumMin(prevWeek)? (min>=sumMin(prevWeek)?'+':'')+Math.round((min/sumMin(prevWeek)-1)*100)+'% t.o.v. vorige week' : 'Nog geen vergelijking')+'</div>'+
   '</div>'+
 
   '<div class="card"><h2>Laatste 8 weken</h2>'+
     svgChart(chartWeeks(8))+
-    '<div class="legend">'+Object.keys(TYPES).map(t=>'<span><i class="dot" style="background:'+HEX[t]+'"></i>'+TYPES[t].label+'</span>').join('')+'</div>'+
+    '<div class="legend">'+TYPE_KEYS.map(t=>'<span><i class="dot" style="background:'+TYPES[t].hex+'"></i>'+TYPES[t].label+'</span>').join('')+'</div>'+
   '</div>'+
 
   '<div class="card"><h2>Verdeling laatste 4 weken</h2>'+
-    (tot4? Object.keys(TYPES).filter(t=>per4[t]>0).map(t=>
+    (tot4? TYPE_KEYS.filter(t=>per4[t]>0).map(t=>
       '<div style="margin-bottom:11px"><div class="row"><span class="small">'+TYPES[t].icon+' '+TYPES[t].label+'</span><span class="small muted">'+fmtHours(per4[t])+' · '+Math.round(per4[t]/tot4*100)+'%</span></div>'+
-      '<div class="bar"><i style="width:'+(per4[t]/tot4*100)+'%;background:'+HEX[t]+'"></i></div></div>').join('')
+      '<div class="bar"><i style="width:'+(per4[t]/tot4*100)+'%;background:'+TYPES[t].hex+'"></i></div></div>').join('')
       : '<div class="empty">Nog geen sessies gelogd.</div>')+
   '</div>'+
 
   '<div class="card"><h2>Consistentie & records</h2>'+
     '<div class="grid2">'+
-      '<div class="stat"><div class="n">'+weekStreak()+'<small> wk</small></div><div class="l">weken op rij ≥4 dagen</div></div>'+
+      '<div class="stat"><div class="n">'+weekStreak()+'<small> wk</small></div><div class="l">weken op rij ≥'+goal+' dagen</div></div>'+
       '<div class="stat"><div class="n">'+dayStreak()+'<small> d</small></div><div class="l">dagen op rij</div></div>'+
       '<div class="stat"><div class="n">'+all.length+'</div><div class="l">sessies totaal</div></div>'+
       '<div class="stat"><div class="n">'+fmtHours(allMin)+'</div><div class="l">uren totaal</div></div>'+
-      '<div class="stat"><div class="n">'+allKm.toFixed(1).replace('.',',')+'<small> km</small></div><div class="l">hardgelopen</div></div>'+
+      '<div class="stat"><div class="n">'+allKm.toFixed(1).replace('.',',')+'<small> km</small></div><div class="l">cardio afstand</div></div>'+
       '<div class="stat"><div class="n">'+(bestWeek&&bestWeek.total?fmtHours(bestWeek.total):'–')+'</div><div class="l">beste week</div></div>'+
     '</div>'+
     '<hr class="sep">'+
-    '<div class="small muted">🏃 Langste loop: '+(longest? (+longest.km).toFixed(1).replace('.',',')+' km ('+fmtDate(longest.date)+')':'nog geen')+'</div>'+
+    '<div class="small muted">🏃 Langste: '+(longest? (+longest.km).toFixed(1).replace('.',',')+' km ('+fmtDate(longest.date)+')':'nog geen')+'</div>'+
     '<div class="small muted" style="margin-top:5px">⚡ Snelste tempo (≥2 km): '+(fastest? pace(+fastest.km,+fastest.minutes)+' ('+fmtDate(fastest.date)+')':'nog geen')+'</div>'+
   '</div>'+
 
@@ -686,34 +531,31 @@ function renderDash(){
     (recent.length? recent.map(sessHTML).join('') : '<div class="empty">Nog niets gelogd. Tik op <b>+</b> om je eerste sessie toe te voegen.</div>')+
   '</div>';
 
-  document.querySelectorAll('#view-dash [data-quick]').forEach(b=>{
-    b.onclick = ()=>{
-      const bi = +b.dataset.quick;
-      const pk = today+'#'+bi;
-      const ex = DB.sessions.find(x=>x.planKey===pk);
-      if(ex) openSession(ex);
-      else openSession(prefillFromPlan(today, bi));
-    };
-  });
-  const gs=document.getElementById('goSchema'); if(gs) gs.onclick=()=>setView('schema');
+  const gt=document.getElementById('goTpl'); if(gt) gt.onclick=()=>setView('trainingen');
   const gl=document.getElementById('goLog'); if(gl) gl.onclick=()=>setView('log');
   bindSessionClicks('#view-dash');
 }
 
 function sessHTML(s){
-  const t = TYPES[s.type]||TYPES.tennis;
+  const t = typeOf(s.type);
   let sub = fmtDate(s.date);
+  if(!s.done && s.time) sub += ' · '+s.time;
   if(s.minutes) sub += ' · '+fmtMin(s.minutes);
-  if(s.type==='run' && +s.km) sub += ' · '+(+s.km).toFixed(1).replace('.',',')+' km'+(pace(+s.km,+s.minutes)?' · '+pace(+s.km,+s.minutes):'');
-  if(s.type==='gym' && s.ex && s.ex.length) sub += ' · '+s.ex.length+' oef.';
-  return '<div class="sess" data-id="'+s.id+'">'+
-    '<div class="ic" style="background:'+HEX[s.type]+'22;color:'+HEX[s.type]+'">'+t.icon+'</div>'+
-    '<div class="body"><div class="ttl">'+esc(s.title||t.label)+'</div>'+
+  if(s.type==='cardio'){
+    if(s.cardioKind) sub += ' · '+s.cardioKind;
+    if(+s.km) sub += ' · '+(+s.km).toFixed(1).replace('.',',')+' km'+(pace(+s.km,+s.minutes)?' · '+pace(+s.km,+s.minutes):'');
+  }
+  if(s.type==='kracht' && s.ex && s.ex.length) sub += ' · '+s.ex.length+' oef.';
+  const focusDone = (s.focus||[]).filter(f=>f.d);
+  return '<div class="sess'+(s.done?'':' planned')+'" data-id="'+s.id+'">'+
+    '<div class="ic" style="background:'+t.hex+'22;color:'+t.hex+'">'+t.icon+'</div>'+
+    '<div class="body"><div class="ttl">'+esc(s.title||t.label)+(s.done?'':' <span class="tag t-plan">gepland</span>')+'</div>'+
     '<div class="sub">'+sub+'</div>'+
     (s.notes? '<div class="note">'+esc(s.notes)+'</div>':'')+
-    (s.ex&&s.ex.length? '<div class="note muted tiny">'+s.ex.map(e=>esc(e.name)+' '+(e.sets||'')+'×'+(e.reps||'')+(e.kg?' @ '+e.kg+'kg':'')).join(' · ')+'</div>':'')+
+    (s.type==='kracht'&&s.ex&&s.ex.length? '<div class="note muted tiny">'+s.ex.map(e=>esc(e.name)+' '+(e.sets||'')+'×'+(e.reps||'')+(e.kg?' @ '+e.kg+'kg':'')).join(' · ')+'</div>':'')+
+    (focusDone.length? '<div class="note muted tiny">✓ '+focusDone.map(f=>esc(f.t)).join(' · ')+'</div>':'')+
     '</div>'+
-    '<div style="text-align:right">'+(s.rpe?'<div class="rpe">RPE '+s.rpe+'</div>':'')+(s.feel?'<div style="margin-top:5px;font-size:15px">'+FEELS[s.feel-1]+'</div>':'')+'</div>'+
+    '<div style="text-align:right">'+(s.rpe&&s.done?'<div class="rpe">RPE '+s.rpe+'</div>':'')+(s.feel?'<div style="margin-top:5px;font-size:15px">'+FEELS[s.feel-1]+'</div>':'')+'</div>'+
   '</div>';
 }
 function bindSessionClicks(scope){
@@ -722,121 +564,455 @@ function bindSessionClicks(scope){
   });
 }
 
-/* ---------- 7. SCHEMA ---------- */
-let schemaOffset = 0;
-let openDays = {};
-function renderSchema(){
-  const monday = addDays(mondayOf(new Date()), schemaOffset*7);
-  const wNr = planWeek(iso(monday));
-  const plan = buildWeek(wNr);
-  const list = sessionsInWeek(monday);
-  const goal = plannedDaysCount(wNr);
-  const doneD = trainingDays(list);
-  const todayI = todayISO();
+/* ---------- 7. VIEW: TRAININGEN ---------- */
+let tplFilter = 'alles';
+function renderTrainingen(){
+  let list = DB.templates.slice();
+  if(tplFilter!=='alles') list = list.filter(t=>t.type===tplFilter);
 
-  let daysHTML='';
-  plan.days.forEach((d,di)=>{
-    const dateStr = iso(addDays(monday,di));
-    const isToday = dateStr===todayI;
-    const blocksDone = d.blocks.filter((b,bi)=>DB.sessions.some(s=>s.planKey===dateStr+'#'+bi)).length;
-    const open = openDays[dateStr] !== undefined ? openDays[dateStr] : isToday;
-    const evs = calEventsForDate(dateStr);
-    daysHTML += '<div class="day'+(d.rest?' rest':'')+(open?' open':'')+'" data-date="'+dateStr+'">'+
-      '<div class="day-head">'+
-        '<span class="chev">▶</span>'+
-        '<div class="d">'+d.name+' <span class="muted" style="font-weight:500">'+fmtDate(dateStr).slice(3)+'</span>'+(isToday?' <span class="tag t-tennis">vandaag</span>':'')+'</div>'+
-        '<div class="meta">'+(d.rest?'rust':(blocksDone+'/'+d.blocks.length+' · '+d.blocks.reduce((t,b)=>t+b.dur,0)+' min'))+'</div>'+
+  const groups = TYPE_KEYS.map(t=>({type:t, items:list.filter(x=>x.type===t)})).filter(g=>g.items.length);
+
+  document.getElementById('view-trainingen').innerHTML =
+    '<div class="card">'+
+      '<h2>Mijn trainingen</h2>'+
+      '<div class="small muted" style="margin-bottom:12px;line-height:1.6">Maak je eigen trainingen aan en bewaar ze. Daarna kies je er eentje en zet je hem op een dag — loggen of vooruit plannen.</div>'+
+      '<div class="btnrow">'+
+        TYPE_KEYS.map(t=>'<button class="btn small" data-new="'+t+'" style="background:'+TYPES[t].hex+';color:#101a15">+ '+TYPES[t].icon+' '+TYPES[t].label+'</button>').join('')+
       '</div>'+
-      '<div class="day-body">'+
-        d.blocks.map((b,bi)=>{
-          const pk = dateStr+'#'+bi;
-          const s = DB.sessions.find(x=>x.planKey===pk);
-          const st = evs[bi] ? minToTime(evs[bi].start)+'–'+minToTime(evs[bi].start+b.dur) : '';
-          return '<div class="blockitem">'+
-            '<div class="row" style="align-items:flex-start">'+
-              '<div style="flex:1"><div class="bt"><span class="tag t-'+b.type+'">'+TYPES[b.type].label+'</span><b>'+esc(b.title)+'</b></div>'+
-              '<div class="tiny muted" style="margin-top:3px">🕐 '+st+' · '+b.dur+' min</div></div>'+
-              '<button class="check '+(s?'on':'')+'" data-log="'+dateStr+'|'+bi+'">✓</button>'+
-            '</div>'+
-            '<ul>'+b.items.map(i=>'<li>'+esc(i)+'</li>').join('')+'</ul>'+
-            (s&&s.notes?'<div class="note tiny" style="color:var(--accent)">📝 '+esc(s.notes)+'</div>':'')+
-          '</div>';
-        }).join('')+
-        '<button class="btn ghost small" data-cal="'+dateStr+'" style="margin-top:10px">📅 Deze dag in agenda</button>'+
-      '</div>'+
-    '</div>';
-  });
-
-  document.getElementById('view-schema').innerHTML =
-    '<div class="weeknav">'+
-      '<button id="prevW">‹</button>'+
-      '<div class="info"><b>Week '+wNr+' — '+esc(plan.phase.name)+(plan.deload?' (deload)':'')+'</b>'+
-        '<span>'+fmtDate(iso(monday))+' t/m '+fmtDate(iso(addDays(monday,6)))+'</span></div>'+
-      '<button id="nextW">›</button>'+
     '</div>'+
-    '<div class="card"><div class="row"><h3 style="margin:0">'+esc(plan.theme)+'</h3><span class="pill">'+doneD+'/'+goal+'</span></div>'+
-      '<div class="small muted" style="margin-top:8px">'+esc(plan.note)+'</div>'+
-      '<div class="bar"><i style="width:'+Math.min(100,doneD/goal*100)+'%"></i></div>'+
-      '<div class="tiny muted" style="margin-top:8px">Focus van dit blok: '+esc(plan.phase.doel)+'</div>'+
-      '<button class="btn ghost small block" id="calWeekBtn" style="margin-top:12px">📅 Deze week in agenda zetten</button>'+
+    '<div class="seg" style="margin-bottom:14px">'+
+      ['alles'].concat(TYPE_KEYS).map(t=>'<button data-tf="'+t+'" class="'+(tplFilter===t?'on':'')+'">'+(t==='alles'?'Alles':TYPES[t].icon+' '+TYPES[t].label)+'</button>').join('')+
     '</div>'+
-    daysHTML+
-    (schemaOffset!==0?'<button class="btn ghost block" id="backNow">Terug naar deze week</button>':'');
+    (groups.length? groups.map(g=>
+        '<h2 style="font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:18px 0 10px">'+TYPES[g.type].icon+' '+TYPES[g.type].label+' · '+g.items.length+'</h2>'+
+        g.items.map(tplHTML).join('')
+      ).join('')
+      : '<div class="empty">Nog geen trainingen opgeslagen.<br>Maak er hierboven eentje aan — bijvoorbeeld <b>Kracht: Benen &amp; push</b>, <b>Cardio: Duurloop 8 km</b> of <b>Tennis: Techniek</b>.</div>');
 
-  document.getElementById('prevW').onclick=()=>{ schemaOffset--; renderSchema(); };
-  document.getElementById('nextW').onclick=()=>{ schemaOffset++; renderSchema(); };
-  const bn=document.getElementById('backNow'); if(bn) bn.onclick=()=>{ schemaOffset=0; renderSchema(); };
-  document.querySelectorAll('#view-schema .day-head').forEach(h=>{
-    h.onclick=(e)=>{
-      if(e.target.closest('[data-log]')) return;
-      const day=h.parentElement, ds=day.dataset.date;
-      day.classList.toggle('open');
-      openDays[ds]=day.classList.contains('open');
-    };
+  document.querySelectorAll('#view-trainingen [data-new]').forEach(b=>{
+    b.onclick=()=>openTemplate(null, b.dataset.new);
   });
-  document.querySelectorAll('#view-schema [data-log]').forEach(b=>{
-    b.onclick=(e)=>{
-      e.stopPropagation();
-      const p=b.dataset.log.split('|'), ds=p[0], bi=+p[1];
-      const ex=DB.sessions.find(x=>x.planKey===ds+'#'+bi);
-      if(ex) openSession(ex); else openSession(prefillFromPlan(ds,bi));
-    };
+  document.querySelectorAll('#view-trainingen [data-tf]').forEach(b=>{
+    b.onclick=()=>{ tplFilter=b.dataset.tf; renderTrainingen(); };
   });
-  document.querySelectorAll('#view-schema [data-cal]').forEach(b=>{
-    b.onclick=(e)=>{ e.stopPropagation(); exportDay(b.dataset.cal); };
+  document.querySelectorAll('#view-trainingen .tpl[data-tid]').forEach(el=>{
+    el.onclick=()=>{ const t=templateById(el.dataset.tid); if(t) openTemplateActions(t); };
   });
-  document.getElementById('calWeekBtn').onclick=()=>{
-    const evs=[];
-    for(let i=0;i<7;i++){
-      calEventsForDate(iso(addDays(monday,i))).forEach(ev=>{
-        if(ev.rest && !DB.settings.calRest) return;
-        evs.push(ev);
-      });
+}
+function tplHTML(t){
+  const ty = typeOf(t.type);
+  const det = templateDetail(t);
+  return '<div class="tpl" data-tid="'+t.id+'">'+
+    '<div class="ic" style="background:'+ty.hex+'22;color:'+ty.hex+'">'+ty.icon+'</div>'+
+    '<div class="body">'+
+      '<div class="ttl">'+esc(t.name)+'</div>'+
+      '<div class="sub">'+esc(templateSummary(t))+'</div>'+
+      (det? '<div class="det muted">'+esc(det)+'</div>':'')+
+    '</div><div class="go">›</div></div>';
+}
+
+/* keuzemenu bij tikken op een training */
+function openTemplateActions(t){
+  const ty = typeOf(t.type);
+  sheetHTML(
+    '<div class="row"><h2>'+ty.icon+' '+esc(t.name)+'</h2><button class="btn ghost small" data-close>Sluiten</button></div>'+
+    '<div class="small muted" style="margin-top:4px">'+esc(templateSummary(t))+'</div>'+
+    (templateDetail(t)? '<div class="small" style="margin-top:10px;line-height:1.6;color:#cfe0d7">'+esc(templateDetail(t))+'</div>':'')+
+    (t.notes? '<div class="small muted" style="margin-top:10px;white-space:pre-wrap">'+esc(t.notes)+'</div>':'')+
+    '<label class="f">Op welke dag?</label>'+
+    '<div class="inline">'+
+      '<input type="date" id="tplDate" value="'+todayISO()+'">'+
+      '<input type="time" id="tplTime" value="'+(DB.settings.defaultTime||'18:00')+'">'+
+    '</div>'+
+    '<div style="margin-top:16px">'+
+      '<button class="btn block" id="tplLog">✓ Nu loggen</button>'+
+      '<button class="btn ghost block" id="tplPlan" style="margin-top:8px">📌 Inplannen op deze dag</button>'+
+    '</div>'+
+    '<hr class="sep">'+
+    '<div class="btnrow">'+
+      '<button class="btn ghost small" id="tplEdit">✏️ Bewerken</button>'+
+      '<button class="btn ghost small" id="tplCopy">⧉ Dupliceren</button>'+
+      '<button class="btn danger small" id="tplDel">Verwijderen</button>'+
+    '</div>'
+  );
+  const dEl=()=>document.getElementById('tplDate').value||todayISO();
+  const tEl=()=>document.getElementById('tplTime').value||DB.settings.defaultTime;
+  document.getElementById('tplLog').onclick=()=>{
+    const s=sessionFromTemplate(t, dEl()); s.time=tEl(); s.done=true; openSession(s);
+  };
+  document.getElementById('tplPlan').onclick=()=>{
+    const s=sessionFromTemplate(t, dEl()); s.time=tEl(); s.done=false; openSession(s);
+  };
+  document.getElementById('tplEdit').onclick=()=>openTemplate(t);
+  document.getElementById('tplCopy').onclick=()=>{
+    const c=JSON.parse(JSON.stringify(t)); c.id=null; c.name=t.name+' (kopie)';
+    openTemplate(c);
+  };
+  document.getElementById('tplDel').onclick=()=>{
+    if(confirm('Training "'+t.name+'" verwijderen? Je gelogde sessies blijven staan.')){
+      DB.templates = DB.templates.filter(x=>x.id!==t.id);
+      save(); closeSheet(); render(); toast('Training verwijderd');
     }
-    if(!evs.length){ toast('Niets te plannen'); return; }
-    downloadICS(buildICS(evs,'Tennis training week '+wNr), 'tennis-week-'+iso(monday)+'.ics');
-    toast(evs.length+' afspraken geëxporteerd');
   };
-  document.getElementById('topPill').textContent='Week '+wNr;
 }
 
-function prefillFromPlan(dateStr, bi){
-  const w = planWeek(dateStr);
-  const plan = buildWeek(w);
-  const di = (parseISO(dateStr).getDay()+6)%7;
-  const b = plan.days[di].blocks[bi];
+/* ---------- 8. TRAININGSFORMULIER (sjabloon) ---------- */
+let tform = null;
+function openTemplate(t, type){
+  tform = Object.assign(
+    {id:null, type:type||'kracht', name:'', minutes:'', notes:'', ex:[], focus:[], cardioKind:CARDIO_KINDS[0], km:''},
+    t? JSON.parse(JSON.stringify(t)) : {}
+  );
+  if(!tform.ex) tform.ex=[];
+  if(!tform.focus) tform.focus=[];
+  if(tform.type==='kracht' && !tform.ex.length) tform.ex=[{name:'',sets:'3',reps:'10',kg:''}];
+  if(tform.type==='tennis' && !tform.focus.length) tform.focus=[''];
+  renderTemplateSheet();
+}
+function collectTemplate(){
+  const g=id=>document.getElementById(id);
+  if(!g('tName')) return;
+  tform.name = g('tName').value;
+  tform.minutes = g('tMin').value;
+  tform.notes = g('tNotes').value;
+  if(g('tKind')) tform.cardioKind = g('tKind').value;
+  if(g('tKm')) tform.km = g('tKm').value;
+  const rows = document.querySelectorAll('#tExList .exrow');
+  if(rows.length) tform.ex = Array.from(rows).map(r=>({
+    name:r.querySelector('.exn').value, sets:r.querySelector('.exs').value, reps:r.querySelector('.exr').value, kg:''
+  }));
+  const frows = document.querySelectorAll('#tFocusList .focusrow');
+  if(frows.length) tform.focus = Array.from(frows).map(r=>r.querySelector('.fxt').value);
+}
+function renderTemplateSheet(){
+  const f=tform;
+  sheetHTML(
+    '<div class="row"><h2>'+(f.id?'Training bewerken':'Nieuwe training')+'</h2>'+
+      '<button class="btn ghost small" data-close>Sluiten</button></div>'+
+
+    '<label class="f">Soort</label>'+
+    '<div class="seg" id="tTypeSeg">'+TYPE_KEYS.map(t=>'<button data-ttype="'+t+'" class="'+(f.type===t?'on':'')+'">'+TYPES[t].icon+' '+TYPES[t].label+'</button>').join('')+'</div>'+
+
+    '<label class="f">Naam van de training</label>'+
+    '<input type="text" id="tName" value="'+esc(f.name)+'" placeholder="'+(f.type==='kracht'?'Bijv. Kracht — benen &amp; push':f.type==='cardio'?'Bijv. Duurloop rustig':'Bijv. Tennis — techniek')+'">'+
+
+    (f.type==='cardio'
+      ? '<div class="inline"><div><label class="f">Soort cardio</label><select id="tKind">'+
+          CARDIO_KINDS.map(k=>'<option'+(f.cardioKind===k?' selected':'')+'>'+k+'</option>').join('')+
+        '</select></div>'+
+        '<div><label class="f">Standaard afstand (km)</label><input type="number" step="0.1" inputmode="decimal" id="tKm" value="'+esc(f.km)+'" placeholder="8.0"></div></div>'
+      : '')+
+
+    '<label class="f">Standaardduur (min)</label>'+
+    '<input type="number" inputmode="numeric" id="tMin" value="'+esc(f.minutes)+'" placeholder="60">'+
+
+    (f.type==='kracht'
+      ? '<label class="f">Oefeningen</label>'+
+        '<div class="exhead noweight"><span>Oefening</span><span>Set</span><span>Rep</span><span></span></div>'+
+        '<div id="tExList">'+ f.ex.map(tplExRow).join('') +'</div>'+
+        '<div class="btnrow" style="margin-top:8px"><button class="btn ghost small" id="tAddEx">+ Oefening</button></div>'
+      : '')+
+
+    (f.type==='tennis'
+      ? '<label class="f">Aandachtspunten / onderdelen</label>'+
+        '<div id="tFocusList">'+ f.focus.map(focusTplRow).join('') +'</div>'+
+        '<div class="btnrow" style="margin-top:8px"><button class="btn ghost small" id="tAddFocus">+ Punt</button></div>'+
+        '<div class="tiny muted" style="margin-top:6px">Deze punten kun je tijdens het loggen afvinken.</div>'
+      : '')+
+
+    '<label class="f">Notities (optioneel)</label>'+
+    '<textarea id="tNotes" placeholder="Vaste opmerkingen, warming-up, rusttijden…">'+esc(f.notes)+'</textarea>'+
+
+    '<div style="margin-top:18px">'+
+      '<button class="btn block" id="tSave">Training opslaan</button>'+
+    '</div>'
+  );
+
+  document.querySelectorAll('#tTypeSeg [data-ttype]').forEach(b=>{
+    b.onclick=()=>{
+      collectTemplate();
+      tform.type=b.dataset.ttype;
+      if(tform.type==='kracht' && !tform.ex.length) tform.ex=[{name:'',sets:'3',reps:'10',kg:''}];
+      if(tform.type==='tennis' && !tform.focus.length) tform.focus=[''];
+      renderTemplateSheet();
+    };
+  });
+  const ae=document.getElementById('tAddEx');
+  if(ae) ae.onclick=()=>{ collectTemplate(); tform.ex.push({name:'',sets:'3',reps:'10',kg:''}); renderTemplateSheet(); };
+  const af=document.getElementById('tAddFocus');
+  if(af) af.onclick=()=>{ collectTemplate(); tform.focus.push(''); renderTemplateSheet(); };
+  document.querySelectorAll('#tExList .del').forEach((b,i)=>{
+    b.onclick=()=>{ collectTemplate(); tform.ex.splice(i,1); renderTemplateSheet(); };
+  });
+  document.querySelectorAll('#tFocusList .del').forEach((b,i)=>{
+    b.onclick=()=>{ collectTemplate(); tform.focus.splice(i,1); renderTemplateSheet(); };
+  });
+  document.getElementById('tSave').onclick=saveTemplate;
+}
+function tplExRow(e){
+  return '<div class="exrow noweight">'+
+    '<input class="exn" type="text" value="'+esc(e.name)+'" placeholder="Oefening">'+
+    '<input class="exs" type="text" inputmode="numeric" value="'+esc(e.sets)+'" placeholder="3">'+
+    '<input class="exr" type="text" value="'+esc(e.reps)+'" placeholder="10">'+
+    '<button class="del">×</button></div>';
+}
+function focusTplRow(txt){
+  return '<div class="focusrow" style="grid-template-columns:1fr 30px">'+
+    '<input class="fxt" type="text" value="'+esc(txt)+'" placeholder="Bijv. forehand cross diep">'+
+    '<button class="del">×</button></div>';
+}
+function saveTemplate(){
+  collectTemplate();
+  const name=(tform.name||'').trim();
+  if(!name){ toast('Geef de training een naam'); return; }
+  const t = {
+    id: tform.id || uid(),
+    created: tform.created || Date.now(),
+    type: tform.type,
+    name: name,
+    minutes: +tform.minutes||0,
+    notes: (tform.notes||'').trim(),
+    cardioKind: tform.type==='cardio' ? (tform.cardioKind||CARDIO_KINDS[0]) : '',
+    km: tform.type==='cardio' ? (+tform.km||0) : 0,
+    ex: tform.type==='kracht' ? (tform.ex||[]).filter(e=>e.name && e.name.trim()).map(e=>({name:e.name.trim(),sets:e.sets,reps:e.reps})) : [],
+    focus: tform.type==='tennis' ? (tform.focus||[]).map(x=>String(x).trim()).filter(Boolean) : []
+  };
+  const i = DB.templates.findIndex(x=>x.id===t.id);
+  if(i>=0) DB.templates[i]=t; else DB.templates.push(t);
+  save(); closeSheet(); render(); setView('trainingen'); toast(i>=0?'Bijgewerkt ✓':'Training opgeslagen ✓');
+}
+
+/* ---------- 9. SESSIE-FORMULIER ---------- */
+let form = null;
+function openSession(s){
+  form = Object.assign({
+    id:null, date:todayISO(), time:DB.settings.defaultTime||'18:00', type:'tennis', title:'',
+    minutes:'', km:'', cardioKind:CARDIO_KINDS[0], rpe:6, feel:0, notes:'', ex:[], focus:[],
+    templateId:null, done:true
+  }, s||{});
+  form.ex = (form.ex||[]).map(e=>Object.assign({},e));
+  form.focus = (form.focus||[]).map(f=> typeof f==='string' ? {t:f,d:false} : Object.assign({},f));
+  renderSheet();
+}
+function collectForm(){
+  const g=id=>document.getElementById(id);
+  if(!g('fDate')) return;
+  form.date = g('fDate').value || todayISO();
+  form.time = g('fTime').value || form.time;
+  form.title = g('fTitle').value;
+  form.minutes = g('fMin').value;
+  if(g('fRpe')) form.rpe = g('fRpe').value;
+  form.notes = g('fNotes').value;
+  if(g('fKm')) form.km = g('fKm').value;
+  if(g('fKind')) form.cardioKind = g('fKind').value;
+  const rows = document.querySelectorAll('#exList .exrow');
+  if(rows.length) form.ex = Array.from(rows).map(r=>({
+    name:r.querySelector('.exn').value,
+    sets:r.querySelector('.exs').value,
+    reps:r.querySelector('.exr').value,
+    kg:r.querySelector('.exk').value
+  }));
+  const frows = document.querySelectorAll('#focusList .focusrow');
+  if(frows.length) form.focus = Array.from(frows).map((r,i)=>({
+    t:r.querySelector('.fxt').value,
+    d: form.focus[i] ? !!form.focus[i].d : false
+  }));
+}
+function renderSheet(){
+  const f=form;
+  const isCardio = f.type==='cardio', isKracht = f.type==='kracht', isTennis = f.type==='tennis';
+  const paceTxt = pace(+f.km, +f.minutes);
+  const tpl = f.templateId? templateById(f.templateId) : null;
+
+  sheetHTML(
+    '<div class="row"><h2>'+(f.id?'Sessie bewerken':(f.done?'Training loggen':'Training inplannen'))+'</h2>'+
+      '<button class="btn ghost small" data-close>Sluiten</button></div>'+
+    (tpl? '<div class="tiny muted" style="margin-top:4px">Uit training: '+esc(tpl.name)+'</div>':'')+
+
+    '<label class="f">Soort</label>'+
+    '<div class="seg" id="typeSeg">'+TYPE_KEYS.map(t=>'<button data-type="'+t+'" class="'+(f.type===t?'on':'')+'">'+TYPES[t].icon+' '+TYPES[t].label+'</button>').join('')+'</div>'+
+
+    '<label class="f">Status</label>'+
+    '<div class="seg" id="doneSeg">'+
+      '<button data-done="1" class="'+(f.done?'on':'')+'">✓ Afgerond</button>'+
+      '<button data-done="0" class="'+(f.done?'':'on')+'">📌 Gepland</button>'+
+    '</div>'+
+
+    '<div class="inline3" style="margin-top:12px">'+
+      '<div><label class="f" style="margin-top:0">Datum</label><input type="date" id="fDate" value="'+f.date+'"></div>'+
+      '<div><label class="f" style="margin-top:0">Tijd</label><input type="time" id="fTime" value="'+(f.time||'18:00')+'"></div>'+
+      '<div><label class="f" style="margin-top:0">Duur (min)</label><input type="number" inputmode="numeric" id="fMin" value="'+esc(f.minutes)+'" placeholder="60"></div>'+
+    '</div>'+
+
+    (isCardio? '<div class="inline3">'+
+      '<div><label class="f">Soort</label><select id="fKind">'+CARDIO_KINDS.map(k=>'<option'+(f.cardioKind===k?' selected':'')+'>'+k+'</option>').join('')+'</select></div>'+
+      '<div><label class="f">Afstand (km)</label><input type="number" step="0.1" inputmode="decimal" id="fKm" value="'+esc(f.km)+'" placeholder="8.0"></div>'+
+      '<div><label class="f">Tempo</label><input type="text" id="fPace" value="'+(paceTxt||'—')+'" disabled></div></div>' : '')+
+
+    '<label class="f">Titel</label>'+
+    '<input type="text" id="fTitle" value="'+esc(f.title)+'" placeholder="'+typeOf(f.type).label+'">'+
+
+    (isKracht?
+      '<label class="f">Oefeningen</label>'+
+      '<div class="exhead"><span>Oefening</span><span>Set</span><span>Rep</span><span>Kg</span><span></span></div>'+
+      '<div id="exList">'+ f.ex.map(exRow).join('') +'</div>'+
+      '<div class="btnrow" style="margin-top:8px"><button class="btn ghost small" id="addEx">+ Oefening</button></div>'
+    : '')+
+
+    (isTennis?
+      '<label class="f">Waar heb je aan gewerkt?</label>'+
+      '<div id="focusList">'+ f.focus.map(focusRow).join('') +'</div>'+
+      '<div class="btnrow" style="margin-top:8px"><button class="btn ghost small" id="addFocus">+ Punt</button></div>'
+    : '')+
+
+    (f.done?
+      '<label class="f" id="rpeLbl">Zwaarte (RPE '+f.rpe+'/10)</label>'+
+      '<input type="range" min="1" max="10" step="1" id="fRpe" value="'+f.rpe+'" style="width:100%">'+
+      '<label class="f">Hoe voelde het?</label>'+
+      '<div class="seg" id="feelSeg">'+FEELS.map((e,i)=>'<button data-feel="'+(i+1)+'" class="'+(+f.feel===i+1?'on':'')+'" style="font-size:19px">'+e+'</button>').join('')+'</div>'
+    : '')+
+
+    '<label class="f">Notities</label>'+
+    '<textarea id="fNotes" placeholder="'+(isTennis?'Wat ging goed, wat wil je onthouden?':'Opmerkingen over deze sessie')+'">'+esc(f.notes)+'</textarea>'+
+
+    '<div style="margin-top:18px">'+
+      '<button class="btn block" id="saveSess">Opslaan</button>'+
+      '<div class="btnrow" style="margin-top:8px">'+
+        '<button class="btn ghost small" id="calSess">📅 In agenda</button>'+
+        (f.templateId?'':'<button class="btn ghost small" id="asTpl">💾 Bewaar als training</button>')+
+      '</div>'+
+      (f.id?'<button class="btn danger block" id="delSess" style="margin-top:8px">Verwijderen</button>':'')+
+    '</div>'
+  );
+
+  document.querySelectorAll('#typeSeg [data-type]').forEach(b=>{
+    b.onclick=()=>{
+      collectForm();
+      const oldDefault = typeOf(form.type).label;
+      form.type=b.dataset.type;
+      if(!form.title || form.title===oldDefault) form.title='';
+      if(form.type==='kracht' && !form.ex.length) form.ex=[{name:'',sets:'3',reps:'10',kg:''}];
+      if(form.type==='tennis' && !form.focus.length) form.focus=[{t:'',d:false}];
+      renderSheet();
+    };
+  });
+  document.querySelectorAll('#doneSeg [data-done]').forEach(b=>{
+    b.onclick=()=>{ collectForm(); form.done = b.dataset.done==='1'; renderSheet(); };
+  });
+  document.querySelectorAll('#focusList .fchk').forEach((b,i)=>{
+    b.onclick=()=>{ collectForm(); form.focus[i].d = !form.focus[i].d; renderSheet(); };
+  });
+  document.querySelectorAll('#focusList .del').forEach((b,i)=>{
+    b.onclick=()=>{ collectForm(); form.focus.splice(i,1); renderSheet(); };
+  });
+  const af=document.getElementById('addFocus');
+  if(af) af.onclick=()=>{ collectForm(); form.focus.push({t:'',d:false}); renderSheet(); };
+  document.querySelectorAll('#feelSeg [data-feel]').forEach(b=>{
+    b.onclick=()=>{ collectForm(); form.feel = (+form.feel===+b.dataset.feel)?0:+b.dataset.feel; renderSheet(); };
+  });
+  const rpe=document.getElementById('fRpe');
+  if(rpe) rpe.oninput=()=>{ form.rpe=rpe.value; document.getElementById('rpeLbl').textContent='Zwaarte (RPE '+rpe.value+'/10)'; };
+  const updPace=()=>{ collectForm(); const d=document.getElementById('fPace'); if(d) d.value = pace(+form.km,+form.minutes)||'—'; };
+  const km=document.getElementById('fKm'); if(km) km.oninput=updPace;
+  const mn=document.getElementById('fMin'); if(mn && km) mn.oninput=updPace;
+  const ae=document.getElementById('addEx');
+  if(ae) ae.onclick=()=>{ collectForm(); form.ex.push({name:'',sets:'',reps:'',kg:''}); renderSheet(); };
+  document.querySelectorAll('#exList .del').forEach((b,i)=>{
+    b.onclick=()=>{ collectForm(); form.ex.splice(i,1); renderSheet(); };
+  });
+  document.getElementById('saveSess').onclick=()=>saveSession();
+  document.getElementById('calSess').onclick=()=>{
+    collectForm();
+    const s = buildSessionObject();
+    exportSessions([s], 'training-'+s.date+'.ics');
+  };
+  const at=document.getElementById('asTpl');
+  if(at) at.onclick=()=>{
+    collectForm();
+    openTemplate({
+      id:null, type:form.type, name:(form.title||'').trim(), minutes:form.minutes, notes:form.notes,
+      cardioKind:form.cardioKind, km:form.km,
+      ex:(form.ex||[]).map(e=>({name:e.name,sets:e.sets,reps:e.reps})),
+      focus:(form.focus||[]).map(x=>x.t)
+    });
+  };
+  const del=document.getElementById('delSess');
+  if(del) del.onclick=()=>{
+    if(confirm('Deze sessie verwijderen?')){
+      DB.sessions = DB.sessions.filter(x=>x.id!==form.id);
+      save(); closeSheet(); render(); toast('Verwijderd');
+    }
+  };
+}
+function exRow(e){
+  return '<div class="exrow">'+
+    '<input class="exn" type="text" value="'+esc(e.name)+'" placeholder="Oefening">'+
+    '<input class="exs" type="text" inputmode="numeric" value="'+esc(e.sets)+'" placeholder="3">'+
+    '<input class="exr" type="text" value="'+esc(e.reps)+'" placeholder="10">'+
+    '<input class="exk" type="text" inputmode="decimal" value="'+esc(e.kg)+'" placeholder="kg">'+
+    '<button class="del">×</button></div>';
+}
+function focusRow(f){
+  return '<div class="focusrow">'+
+    '<button class="check fchk '+(f.d?'on':'')+'">✓</button>'+
+    '<input class="fxt" type="text" value="'+esc(f.t)+'" placeholder="Bijv. service ritme">'+
+    '<button class="del">×</button></div>';
+}
+function buildSessionObject(){
   return {
-    id:null, date:dateStr, type:b.type, title:b.title, minutes:b.dur,
-    planKey:dateStr+'#'+bi, rpe:'', feel:0, notes:'', km:'',
-    ex: b.ex? b.ex.map(e=>({name:e.n, sets:e.s, reps:e.r, kg:''})) : []
+    id: form.id || uid(),
+    created: form.created || Date.now(),
+    date: form.date,
+    time: form.time || DB.settings.defaultTime || '18:00',
+    type: form.type,
+    title: (form.title||'').trim() || typeOf(form.type).label,
+    templateId: form.templateId || null,
+    minutes: +form.minutes||0,
+    km: form.type==='cardio' ? (+form.km||0) : 0,
+    cardioKind: form.type==='cardio' ? (form.cardioKind||CARDIO_KINDS[0]) : '',
+    rpe: form.done ? (+form.rpe||0) : 0,
+    feel: form.done ? (+form.feel||0) : 0,
+    notes: (form.notes||'').trim(),
+    ex: form.type==='kracht' ? (form.ex||[]).filter(e=>e.name && e.name.trim()) : [],
+    focus: form.type==='tennis' ? (form.focus||[]).filter(x=>x.t && x.t.trim()) : [],
+    done: !!form.done
   };
 }
-
-/* ---------- 8. AGENDA / ICS EXPORT ---------- */
-function calTimes(){
-  const t = DB.settings.calTimes;
-  return (Array.isArray(t) && t.length===7) ? t.slice() : DEFAULT_CAL_TIMES.slice();
+function saveSession(){
+  collectForm();
+  const s = buildSessionObject();
+  const i = DB.sessions.findIndex(x=>x.id===s.id);
+  if(i>=0) DB.sessions[i]=s; else DB.sessions.push(s);
+  save(); closeSheet(); render(); toast(i>=0?'Bijgewerkt ✓':(s.done?'Sessie opgeslagen ✓':'Ingepland ✓'));
 }
+
+/* ---------- 10. KIEZER (FAB) ---------- */
+function openPicker(){
+  const recent = DB.templates.slice().sort((a,b)=>(b.created||0)-(a.created||0));
+  sheetHTML(
+    '<div class="row"><h2>Wat ga je doen?</h2><button class="btn ghost small" data-close>Sluiten</button></div>'+
+    (recent.length?
+      '<label class="f">Uit mijn trainingen</label>'+ recent.map(tplHTML).join('')
+      : '<div class="empty">Je hebt nog geen trainingen opgeslagen.<br>Maak er eerst eentje aan bij <b>Trainingen</b>.</div>')+
+    '<label class="f">Losse sessie</label>'+
+    '<div class="seg">'+TYPE_KEYS.map(t=>'<button data-blank="'+t+'">'+TYPES[t].icon+' '+TYPES[t].label+'</button>').join('')+'</div>'
+  );
+  document.querySelectorAll('#sheet .tpl[data-tid]').forEach(el=>{
+    el.onclick=()=>{ const t=templateById(el.dataset.tid); if(t) openSession(sessionFromTemplate(t, todayISO())); };
+  });
+  document.querySelectorAll('#sheet [data-blank]').forEach(b=>{
+    b.onclick=()=>{
+      const t=b.dataset.blank;
+      openSession({
+        type:t, done:true,
+        ex: t==='kracht'?[{name:'',sets:'3',reps:'10',kg:''}]:[],
+        focus: t==='tennis'?[{t:'',d:false}]:[]
+      });
+    };
+  });
+}
+
+/* ---------- 11. AGENDA / ICS ---------- */
 function icsEsc(s){
   return String(s==null?'':s)
     .replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,')
@@ -868,67 +1044,52 @@ const VTIMEZONE = [
 'DTSTART:19701025T030000','RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU','END:STANDARD',
 'END:VTIMEZONE'];
 
-/* alle trainingsblokken van één datum, met begintijd in minuten na middernacht */
-function calEventsForDate(dateStr){
-  const w = planWeek(dateStr);
-  const plan = buildWeek(w);
-  const di = (parseISO(dateStr).getDay()+6)%7;
-  const day = plan.days[di];
-  const t = calTimes()[di].split(':');
-  let cursor = (+t[0])*60 + (+t[1]);
-  return day.blocks.map((b,bi)=>{
-    const ev = { date:dateStr, bi:bi, block:b, start:cursor, week:w, plan:plan, rest:!!day.rest, dayName:day.name };
-    cursor += b.dur + 15;
-    return ev;
-  });
+function sessionDescription(s){
+  const parts=[];
+  if(s.type==='kracht' && s.ex && s.ex.length)
+    parts.push(s.ex.map(e=>'• '+e.name+' — '+(e.sets||'')+'×'+(e.reps||'')+(e.kg?' @ '+e.kg+' kg':'')).join('\n'));
+  if(s.type==='cardio'){
+    const d=[]; if(s.cardioKind) d.push(s.cardioKind);
+    if(+s.km) d.push((+s.km).toFixed(1).replace('.',',')+' km');
+    if(+s.minutes) d.push(s.minutes+' min');
+    if(d.length) parts.push(d.join(' · '));
+  }
+  if(s.type==='tennis' && s.focus && s.focus.length)
+    parts.push(s.focus.map(f=>'• '+f.t).join('\n'));
+  if(s.notes) parts.push(s.notes);
+  return parts.join('\n\n');
 }
-function veventFor(ev){
-  const b = ev.block;
+function veventFor(s){
   const rem = +DB.settings.calReminder||0;
-  const desc = 'Week '+ev.week+' van 12 — '+ev.plan.phase.name+(ev.plan.deload?' (deload)':'')+'\n'+
-               ev.plan.theme+'\n\n'+
-               b.items.map(i=>'• '+i).join('\n')+'\n\n'+
-               'Afvinken en loggen in je trainingsapp.';
+  const t = String(s.time||DB.settings.defaultTime||'18:00').split(':');
+  const start = (+t[0])*60 + (+t[1]||0);
+  const dur = +s.minutes||60;
   const lines = [
     'BEGIN:VEVENT',
-    'UID:tt-'+ev.date+'-'+ev.bi+'@ivan-tennis',
+    'UID:tr-'+s.id+'@ivan-training',
     'DTSTAMP:'+utcStamp(new Date()),
     'SEQUENCE:'+Math.floor((Date.now()-1577836800000)/60000),
-    'DTSTART;TZID=Europe/Amsterdam:'+localStamp(ev.date, ev.start),
-    'DTEND;TZID=Europe/Amsterdam:'+localStamp(ev.date, ev.start + b.dur),
-    'SUMMARY:'+icsEsc(TYPES[b.type].icon+' '+b.title),
-    'DESCRIPTION:'+icsEsc(desc),
-    'CATEGORIES:'+icsEsc('Tennis training,'+TYPES[b.type].label),
-    'STATUS:CONFIRMED',
-    'TRANSP:OPAQUE'
+    'DTSTART;TZID=Europe/Amsterdam:'+localStamp(s.date, start),
+    'DTEND;TZID=Europe/Amsterdam:'+localStamp(s.date, start+dur),
+    'SUMMARY:'+icsEsc(typeOf(s.type).icon+' '+(s.title||typeOf(s.type).label)),
+    'DESCRIPTION:'+icsEsc(sessionDescription(s)),
+    'CATEGORIES:'+icsEsc('Training,'+typeOf(s.type).label),
+    'STATUS:CONFIRMED','TRANSP:OPAQUE'
   ];
   if(rem>0){
     lines.push('BEGIN:VALARM','TRIGGER:-PT'+rem+'M','ACTION:DISPLAY',
-               'DESCRIPTION:'+icsEsc(b.title),'END:VALARM');
+               'DESCRIPTION:'+icsEsc(s.title||typeOf(s.type).label),'END:VALARM');
   }
   lines.push('END:VEVENT');
   return lines;
 }
-function buildICS(events, name){
-  const lines = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Ivan Tennis Training//NL','CALSCALE:GREGORIAN','METHOD:PUBLISH',
-    'X-WR-CALNAME:'+icsEsc(name||'Tennis training'),'X-WR-TIMEZONE:Europe/Amsterdam']
+function buildICS(sessions, name){
+  const lines = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Ivan Training//NL','CALSCALE:GREGORIAN','METHOD:PUBLISH',
+    'X-WR-CALNAME:'+icsEsc(name||'Training'),'X-WR-TIMEZONE:Europe/Amsterdam']
     .concat(VTIMEZONE);
-  events.forEach(ev=> lines.push.apply(lines, veventFor(ev)));
+  sessions.forEach(s=> lines.push.apply(lines, veventFor(s)));
   lines.push('END:VCALENDAR');
   return lines.map(fold).join('\r\n')+'\r\n';
-}
-/* alle events vanaf aanstaande maandag (of vandaag) voor n weken */
-function calEventsRange(weeks){
-  const start = new Date(); start.setHours(0,0,0,0);
-  const evs = [];
-  for(let i=0;i<weeks*7;i++){
-    const ds = iso(addDays(start,i));
-    calEventsForDate(ds).forEach(ev=>{
-      if(ev.rest && !DB.settings.calRest) return;
-      evs.push(ev);
-    });
-  }
-  return evs;
 }
 function saveBlob(blob, filename){
   const url = URL.createObjectURL(blob);
@@ -936,61 +1097,44 @@ function saveBlob(blob, filename){
   a.href = url; a.download = filename;
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(()=>URL.revokeObjectURL(url), 8000);
-  return true;
 }
 function downloadICS(text, filename){
-  try{
-    const blob = new Blob([text], {type:'text/calendar;charset=utf-8'});
-    /* iPhone/iPad: via het deelmenu kun je direct "Agenda" kiezen */
-    if(typeof File === 'function' && navigator.canShare){
-      const file = new File([blob], filename, {type:'text/calendar'});
-      if(navigator.canShare({files:[file]})){
-        navigator.share({files:[file], title:'Tennis training'})
-          .catch(()=>{ saveBlob(blob, filename); });
-        return true;
-      }
+  const blob = new Blob([text], {type:'text/calendar;charset=utf-8'});
+  /* iPhone/iPad: via het deelmenu kun je direct "Agenda" kiezen */
+  if(typeof File === 'function' && navigator.canShare){
+    const file = new File([blob], filename, {type:'text/calendar'});
+    if(navigator.canShare({files:[file]})){
+      navigator.share({files:[file], title:'Training'}).catch(()=>saveBlob(blob, filename));
+      return;
     }
-    return saveBlob(blob, filename);
-  }catch(e){ return false; }
+  }
+  saveBlob(blob, filename);
 }
-function openICS(text){
-  window.location.href = 'data:text/calendar;charset=utf-8,'+encodeURIComponent(text);
-}
-function exportSchedule(){
-  const weeks = +DB.settings.calWeeks||12;
-  const evs = calEventsRange(weeks);
-  if(!evs.length){ toast('Geen trainingen gevonden'); return; }
-  const ics = buildICS(evs, 'Tennis training — Ivan');
-  downloadICS(ics, 'tennis-schema-'+weeks+'weken.ics');
-  toast(evs.length+' afspraken geëxporteerd');
-}
-function exportDay(dateStr){
-  const evs = calEventsForDate(dateStr);
-  if(!evs.length){ toast('Niets te plannen'); return; }
-  const ics = buildICS(evs, 'Tennis training');
-  downloadICS(ics, 'training-'+dateStr+'.ics');
-  toast('Dag geëxporteerd');
+function exportSessions(list, filename){
+  if(!list.length){ toast('Niets te exporteren'); return; }
+  downloadICS(buildICS(list, 'Training — Ivan'), filename||'trainingen.ics');
+  toast(list.length===1? 'Afspraak klaar — kies Agenda' : list.length+' afspraken geëxporteerd');
 }
 
-/* ---------- 9. LOGBOEK ---------- */
+/* ---------- 12. LOGBOEK ---------- */
 let logFilter='alles';
 function renderLog(){
-  let list = sessionsSorted();
+  let list = sessionsSorted(doneSessions());
   if(logFilter!=='alles') list = list.filter(s=>s.type===logFilter);
   const monthGroups = {};
   list.forEach(s=>{
     const d=parseISO(s.date), k=MONTHS[d.getMonth()]+' '+d.getFullYear();
     (monthGroups[k]=monthGroups[k]||[]).push(s);
   });
-  const totMin = sumMin(list), totKm = sumKm(list.filter(s=>s.type==='run'));
+  const totMin = sumMin(list), totKm = sumKm(list.filter(s=>s.type==='cardio'));
   document.getElementById('view-log').innerHTML =
     '<div class="card"><div class="grid3">'+
       '<div class="stat"><div class="n">'+list.length+'</div><div class="l">sessies</div></div>'+
       '<div class="stat"><div class="n">'+fmtHours(totMin)+'</div><div class="l">totaal</div></div>'+
-      '<div class="stat"><div class="n">'+totKm.toFixed(1).replace('.',',')+'<small> km</small></div><div class="l">hardlopen</div></div>'+
+      '<div class="stat"><div class="n">'+totKm.toFixed(1).replace('.',',')+'<small> km</small></div><div class="l">cardio</div></div>'+
     '</div></div>'+
     '<div class="seg" style="margin-bottom:14px">'+
-      ['alles'].concat(Object.keys(TYPES)).map(t=>'<button data-filter="'+t+'" class="'+(logFilter===t?'on':'')+'">'+(t==='alles'?'Alles':TYPES[t].icon+' '+TYPES[t].label)+'</button>').join('')+
+      ['alles'].concat(TYPE_KEYS).map(t=>'<button data-filter="'+t+'" class="'+(logFilter===t?'on':'')+'">'+(t==='alles'?'Alles':TYPES[t].icon+' '+TYPES[t].label)+'</button>').join('')+
     '</div>'+
     (list.length? Object.keys(monthGroups).map(k=>
         '<h2 style="font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:18px 0 10px">'+k+' · '+fmtHours(sumMin(monthGroups[k]))+'</h2>'+
@@ -1003,64 +1147,31 @@ function renderLog(){
   bindSessionClicks('#view-log');
 }
 
-/* ---------- 10. INSTELLINGEN ---------- */
+/* ---------- 13. INSTELLINGEN ---------- */
 function renderSettings(){
-  const w = planWeek(todayISO());
-  const times = calTimes();
+  const planned = DB.sessions.filter(s=>!s.done && s.date>=todayISO());
   document.getElementById('view-settings').innerHTML =
-    '<div class="card"><h2>Schema</h2>'+
-      '<label class="f">Startdatum van het schema (maandag van week 1)</label>'+
-      '<input type="date" id="setStart" value="'+DB.settings.startDate+'">'+
-      '<div class="tiny muted" style="margin-top:8px">Je zit nu in week '+w+' van 12. Na week 12 begint het schema opnieuw met een nieuwe ronde (zwaarder invullen dan de vorige).</div>'+
-      '<div style="margin-top:12px"><button class="btn small" id="saveStart">Opslaan</button></div>'+
+    '<div class="card"><h2>Weekdoel</h2>'+
+      '<label class="f">Aantal trainingsdagen per week</label>'+
+      '<input type="number" inputmode="numeric" min="1" max="7" id="setGoal" value="'+(+DB.settings.weeklyGoal||4)+'">'+
+      '<div style="margin-top:12px"><button class="btn small" id="saveGoal">Opslaan</button></div>'+
     '</div>'+
 
-    '<div class="card"><h2>&#128260; Automatisch in je agenda</h2>'+
-      '<div class="small muted" style="line-height:1.65;margin-bottom:12px">Abonneer je één keer, daarna komt je hele trainingsschema vanzelf in je Apple Agenda — ook alle toekomstige weken. Je hoeft nooit meer iets te importeren.</div>'+
-      '<div style="margin-top:4px"><button class="btn block" id="subBtn">📅 Abonneren op mijn trainingsagenda</button></div>'+
-      '<div class="tiny muted" style="margin-top:10px;line-height:1.6">Je iPhone vraagt één keer om bevestiging. Zet daarna in de Agenda-app bij <b>Vernieuwen</b> de frequentie op <i>Elk uur</i> of <i>Elke dag</i>.<br>'+
-      'De feed gebruikt vaste standaardtijden. Wil je andere tijden of andere weken? Gebruik dan de handmatige export hieronder.</div>'+
+    '<div class="card"><h2>📅 Agenda</h2>'+
+      '<div class="small muted" style="line-height:1.65;margin-bottom:12px">Elke geplande of gelogde training kun je als afspraak in je Apple Agenda zetten. Exporteer je opnieuw, dan worden bestaande afspraken bijgewerkt in plaats van gedupliceerd (zelfde afspraak-ID).</div>'+
+      '<div class="inline">'+
+        '<div><label class="f" style="margin-top:0">Standaard starttijd</label><input type="time" id="setTime" value="'+(DB.settings.defaultTime||'18:00')+'"></div>'+
+        '<div><label class="f" style="margin-top:0">Herinnering</label><select id="setRem">'+
+          [['0','Geen'],['15','15 min vooraf'],['30','30 min vooraf'],['60','1 uur vooraf'],['120','2 uur vooraf']]
+            .map(o=>'<option value="'+o[0]+'"'+(String(DB.settings.calReminder)===o[0]?' selected':'')+'>'+o[1]+'</option>').join('')+
+        '</select></div>'+
+      '</div>'+
+      '<div style="margin-top:16px"><button class="btn block" id="calAll">📅 Alle geplande trainingen exporteren ('+planned.length+')</button></div>'+
+      '<div class="tiny muted" style="margin-top:10px;line-height:1.6">Op je iPhone opent het deelmenu — kies <b>Agenda</b> en daarna <b>Voeg alles toe</b>. Tip: zet ze in een aparte agenda "Training", dan kun je alles in één keer verbergen of wissen.</div>'+
     '</div>'+
 
-    '<div class="card"><h2>📅 Handmatige agenda-export</h2>'+
-      '<div class="small muted" style="margin-bottom:4px">Zet je hele trainingsschema als afspraken in je iPhone-agenda, inclusief alle oefeningen in de omschrijving.</div>'+
-      '<label class="f">Starttijd per dag</label>'+
-      '<div class="timegrid">'+
-        DAYSHORT.map((d,i)=>'<div class="timecell"><span>'+d+'</span><input type="time" class="calTime" data-day="'+i+'" value="'+times[i]+'"></div>').join('')+
-      '</div>'+
-      '<div class="tiny muted" style="margin-top:8px">Op dagen met twee blokken (tennis + kracht) start het tweede blok automatisch 15 min na het eerste.</div>'+
-      '<div class="inline" style="margin-top:4px">'+
-        '<div><label class="f">Herinnering</label>'+
-          '<select id="calRem">'+[['0','Geen'],['15','15 min vooraf'],['30','30 min vooraf'],['60','1 uur vooraf'],['120','2 uur vooraf']]
-            .map(o=>'<option value="'+o[0]+'"'+(String(DB.settings.calReminder)===o[0]?' selected':'')+'>'+o[1]+'</option>').join('')+'</select></div>'+
-        '<div><label class="f">Periode</label>'+
-          '<select id="calWeeks">'+[['2','2 weken'],['4','4 weken'],['8','8 weken'],['12','12 weken'],['24','24 weken']]
-            .map(o=>'<option value="'+o[0]+'"'+(String(DB.settings.calWeeks)===o[0]?' selected':'')+'>'+o[1]+'</option>').join('')+'</select></div>'+
-      '</div>'+
-      '<label class="f">Rust-/hersteldagen meenemen</label>'+
-      '<div class="seg" id="calRestSeg">'+
-        '<button data-rest="0" class="'+(DB.settings.calRest?'':'on')+'">Nee, alleen trainingen</button>'+
-        '<button data-rest="1" class="'+(DB.settings.calRest?'on':'')+'">Ja, ook rustdagen</button>'+
-      '</div>'+
-      '<div style="margin-top:16px"><button class="btn block" id="icsBtn">📅 Agenda-bestand maken (.ics)</button></div>'+
-      '<div style="margin-top:8px"><button class="btn ghost block small" id="icsOpen">Werkt de download niet? Direct openen</button></div>'+
-      '<div class="tiny muted" id="icsInfo" style="margin-top:10px">Dit maakt <b>'+calEventsRange(+DB.settings.calWeeks||12).length+'</b> afspraken aan.</div>'+
-      '<hr class="sep">'+
-      '<div class="small muted" style="line-height:1.65"><b>Zo zet je het in je iPhone-agenda:</b><br>'+
-      '1. Tik op <b>Agenda-bestand maken</b> — het .ics-bestand komt in je Downloads/Bestanden.<br>'+
-      '2. Open het bestand → Agenda opent → <b>Voeg alles toe</b>.<br>'+
-      '3. Kies eventueel een aparte agenda "Tennis" zodat je alles in één keer kunt verbergen of verwijderen.<br>'+
-      '4. Wijzig je alleen je tijden? Exporteer opnieuw — afspraken met dezelfde datum en blok worden bijgewerkt in plaats van gedupliceerd.<br>'+
-      '5. Verander je de <b>startdatum</b> van het schema? Verwijder eerst de oude afspraken (daarom handig: een aparte agenda "Tennis"), want het schema verschuift dan naar andere dagen.</div>'+
-    '</div>'+
-
-    '<div class="card"><h2>Opbouw van het plan</h2>'+
-      PHASES.map(p=>'<div style="margin-bottom:12px"><b>Week '+p.weeks[0]+'–'+p.weeks[p.weeks.length-1]+': '+p.name+'</b>'+
-        '<div class="small muted" style="margin-top:3px">'+p.doel+'</div></div>').join('')+
-      '<div class="tiny muted">Week 4, 8 en 12 zijn deload-weken: ~65% volume zodat je supercompenseert en blessurevrij blijft. Vaste weekindeling: ma tennis+kracht, di duurloop, wo rust, do tennis+kracht, vr voetenwerk/intervallen, za matchplay, zo rust.</div>'+
-    '</div>'+
     '<div class="card"><h2>Data</h2>'+
-      '<div class="small muted" style="margin-bottom:12px">'+DB.sessions.length+' sessies opgeslagen op dit toestel (localStorage). Maak af en toe een back-up.</div>'+
+      '<div class="small muted" style="margin-bottom:12px">'+DB.templates.length+' trainingen en '+DB.sessions.length+' sessies staan op dit toestel (localStorage). Maak af en toe een back-up.</div>'+
       '<div class="btnrow">'+
         '<button class="btn small" id="expBtn">⬇ Exporteren</button>'+
         '<button class="btn ghost small" id="impBtn">⬆ Importeren</button>'+
@@ -1068,59 +1179,26 @@ function renderSettings(){
       '</div>'+
       '<input type="file" id="fileIn" accept="application/json" style="display:none">'+
     '</div>'+
+
     '<div class="card"><h2>Op je telefoon zetten</h2>'+
-      '<div class="small muted" style="line-height:1.6">1. Open <b>ivan-semper.github.io/tennis-training-app</b> in <b>Safari</b>.<br>'+
-      '2. Tik op de deelknop en kies <b>Zet op beginscherm</b> — dan opent het als een app.<br>'+
-      '3. Gebruik daarna altijd dat icoontje. Je sessies worden op dit toestel bewaard, niet online, dus maak af en toe een back-up via Exporteren.</div>'+
+      '<div class="small muted" style="line-height:1.6">1. Open de app in <b>Safari</b>.<br>'+
+      '2. Tik op de deelknop en kies <b>Zet op beginscherm</b>.<br>'+
+      '3. Je gegevens staan op dit toestel, niet online — maak dus af en toe een back-up via Exporteren.</div>'+
     '</div>';
 
-  document.getElementById('saveStart').onclick=()=>{
-    const v=document.getElementById('setStart').value;
-    if(!v) return;
-    DB.settings.startDate = iso(mondayOf(parseISO(v)));
-    save(); toast('Startdatum opgeslagen'); render();
+  document.getElementById('saveGoal').onclick=()=>{
+    const v=Math.max(1,Math.min(7,+document.getElementById('setGoal').value||4));
+    DB.settings.weeklyGoal=v; save(); toast('Weekdoel opgeslagen'); render();
   };
-
-  document.getElementById('subBtn').onclick=()=>{
-    const url = location.origin + location.pathname.replace(/[^/]*$/, '') + 'schema.ics';
-    location.href = 'webcal://' + url.replace(/^https?:\/\//, '');
-  };
-
-  /* --- agenda-instellingen --- */
-  function saveCal(){
-    DB.settings.calTimes = Array.from(document.querySelectorAll('.calTime'))
-      .sort((a,b)=>a.dataset.day-b.dataset.day)
-      .map(i=> i.value || DEFAULT_CAL_TIMES[+i.dataset.day]);
-    DB.settings.calReminder = +document.getElementById('calRem').value;
-    DB.settings.calWeeks = +document.getElementById('calWeeks').value;
-    save();
-  }
-  document.querySelectorAll('.calTime').forEach(i=> i.onchange=()=>{ saveCal(); updIcsInfo(); renderPlanViews(); });
-  document.getElementById('calRem').onchange=saveCal;
-  document.getElementById('calWeeks').onchange=()=>{ saveCal(); updIcsInfo(); };
-  document.querySelectorAll('#calRestSeg [data-rest]').forEach(b=>{
-    b.onclick=()=>{
-      DB.settings.calRest = b.dataset.rest==='1';
-      save();
-      document.querySelectorAll('#calRestSeg [data-rest]').forEach(x=>x.classList.toggle('on', x===b));
-      updIcsInfo();
-    };
-  });
-  function updIcsInfo(){
-    const n = calEventsRange(+DB.settings.calWeeks||12).length;
-    document.getElementById('icsInfo').innerHTML = 'Dit maakt <b>'+n+'</b> afspraken aan.';
-  }
-  document.getElementById('icsBtn').onclick=()=>{ saveCal(); exportSchedule(); };
-  document.getElementById('icsOpen').onclick=()=>{
-    saveCal();
-    openICS(buildICS(calEventsRange(+DB.settings.calWeeks||12), 'Tennis training — Ivan'));
-  };
+  document.getElementById('setTime').onchange=(e)=>{ DB.settings.defaultTime=e.target.value||'18:00'; save(); };
+  document.getElementById('setRem').onchange=(e)=>{ DB.settings.calReminder=+e.target.value; save(); };
+  document.getElementById('calAll').onclick=()=>exportSessions(planned, 'trainingen.ics');
 
   document.getElementById('expBtn').onclick=()=>{
     const blob=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});
     const a=document.createElement('a');
     a.href=URL.createObjectURL(blob);
-    a.download='tennis-training-backup-'+todayISO()+'.json';
+    a.download='training-backup-'+todayISO()+'.json';
     a.click(); URL.revokeObjectURL(a.href);
   };
   document.getElementById('impBtn').onclick=()=>document.getElementById('fileIn').click();
@@ -1130,8 +1208,9 @@ function renderSettings(){
     r.onload=()=>{
       try{
         const d=JSON.parse(r.result);
-        if(!d.sessions) throw new Error('geen sessies');
-        DB.sessions = d.sessions;
+        if(!d || (!Array.isArray(d.sessions) && !Array.isArray(d.templates))) throw new Error('ongeldig');
+        DB.sessions = Array.isArray(d.sessions)? d.sessions : DB.sessions;
+        DB.templates = Array.isArray(d.templates)? d.templates : DB.templates;
         DB.settings = Object.assign(DB.settings, d.settings||{});
         save(); toast('Import gelukt'); render();
       }catch(err){ alert('Kon dit bestand niet lezen.'); }
@@ -1139,163 +1218,22 @@ function renderSettings(){
     r.readAsText(f);
   };
   document.getElementById('wipeBtn').onclick=()=>{
-    if(confirm('Alle sessies verwijderen? Dit kan niet ongedaan worden gemaakt.')){
-      DB.sessions=[]; save(); toast('Alles gewist'); render();
+    if(confirm('Alle trainingen én sessies verwijderen? Dit kan niet ongedaan worden gemaakt.')){
+      DB.sessions=[]; DB.templates=[]; save(); toast('Alles gewist'); render();
     }
   };
 }
 
-
-/* ---------- 11. SESSIE-FORMULIER ---------- */
-let form = null;
-function openSession(s){
-  form = Object.assign({id:null,date:todayISO(),type:'tennis',title:'',minutes:'',km:'',rpe:6,feel:0,notes:'',ex:[],planKey:null}, s||{});
-  form.ex = (form.ex||[]).map(e=>Object.assign({},e));
-  renderSheet();
+/* ---------- 14. APP ---------- */
+function sheetHTML(html){
+  const sheet=document.getElementById('sheet');
+  sheet.innerHTML = '<div class="grab"></div>'+html;
+  sheet.querySelectorAll('[data-close]').forEach(b=>b.onclick=closeSheet);
+  sheet.scrollTop=0;
   document.getElementById('modal').classList.add('open');
 }
-function closeSheet(){ document.getElementById('modal').classList.remove('open'); form=null; }
+function closeSheet(){ document.getElementById('modal').classList.remove('open'); form=null; tform=null; }
 
-function collectForm(){
-  const g=id=>document.getElementById(id);
-  if(!g('fDate')) return;
-  form.date = g('fDate').value || todayISO();
-  form.title = g('fTitle').value;
-  form.minutes = g('fMin').value;
-  form.rpe = g('fRpe') ? g('fRpe').value : form.rpe;
-  form.notes = g('fNotes').value;
-  if(g('fKm')) form.km = g('fKm').value;
-  const rows = document.querySelectorAll('#exList .exrow');
-  if(rows.length || form.type==='gym'){
-    form.ex = Array.from(rows).map(r=>({
-      name:r.querySelector('.exn').value,
-      sets:r.querySelector('.exs').value,
-      reps:r.querySelector('.exr').value,
-      kg:r.querySelector('.exk').value
-    })).filter(e=>e.name.trim());
-  }
-}
-
-function renderSheet(){
-  const f=form;
-  const isRun = f.type==='run', isGym = f.type==='gym';
-  const paceTxt = pace(+f.km, +f.minutes);
-  const sheet=document.getElementById('sheet');
-  sheet.innerHTML =
-    '<div class="grab"></div>'+
-    '<div class="row"><h2>'+(f.id?'Sessie bewerken':'Sessie loggen')+'</h2>'+
-      '<button class="btn ghost small" data-close>Sluiten</button></div>'+
-    (f.planKey?'<div class="tiny muted" style="margin-top:4px">Gekoppeld aan je schema ('+fmtDate(f.date)+')</div>':'')+
-
-    '<label class="f">Type</label>'+
-    '<div class="seg" id="typeSeg">'+Object.keys(TYPES).map(t=>'<button data-type="'+t+'" class="'+(f.type===t?'on':'')+'">'+TYPES[t].icon+' '+TYPES[t].label+'</button>').join('')+'</div>'+
-
-    '<div class="inline"><div><label class="f">Datum</label><input type="date" id="fDate" value="'+f.date+'"></div>'+
-    '<div><label class="f">'+(isRun?'Tijd (min)':'Duur (min)')+'</label><input type="number" inputmode="numeric" id="fMin" value="'+(f.minutes||'')+'" placeholder="60"></div></div>'+
-
-    (isRun? '<div class="inline"><div><label class="f">Afstand (km)</label><input type="number" step="0.1" inputmode="decimal" id="fKm" value="'+(f.km||'')+'" placeholder="8.0"></div>'+
-      '<div><label class="f">Tempo</label><input type="text" id="fPace" value="'+(paceTxt||'—')+'" disabled></div></div>' : '')+
-
-    '<label class="f">Titel</label>'+
-    '<input type="text" id="fTitle" value="'+esc(f.title)+'" placeholder="'+TYPES[f.type].label+'">'+
-
-    (isGym?
-      '<label class="f">Oefeningen</label>'+
-      '<div class="exhead"><span>Oefening</span><span>Set</span><span>Rep</span><span>Kg</span><span></span></div>'+
-      '<div id="exList">'+ f.ex.map(exRow).join('') +'</div>'+
-      '<div class="btnrow" style="margin-top:8px">'+
-        '<button class="btn ghost small" id="addEx">+ Oefening</button>'+
-        '<button class="btn ghost small" data-fill="A">Kracht A uit schema</button>'+
-        '<button class="btn ghost small" data-fill="B">Kracht B uit schema</button>'+
-      '</div>'
-    : '')+
-
-    '<label class="f" id="rpeLbl">Zwaarte (RPE '+f.rpe+'/10)</label>'+
-    '<input type="range" min="1" max="10" step="1" id="fRpe" value="'+f.rpe+'" style="width:100%">'+
-
-    '<label class="f">Hoe voelde het?</label>'+
-    '<div class="seg" id="feelSeg">'+FEELS.map((e,i)=>'<button data-feel="'+(i+1)+'" class="'+(+f.feel===i+1?'on':'')+'" style="font-size:19px">'+e+'</button>').join('')+'</div>'+
-
-    '<label class="f">Notities</label>'+
-    '<textarea id="fNotes" placeholder="Wat ging goed, wat wil je onthouden? Bijv: forehand cross voelde stabiel, tweede opslag te kort.">'+esc(f.notes)+'</textarea>'+
-
-    '<div style="margin-top:18px">'+
-      '<button class="btn block" id="saveSess">Opslaan</button>'+
-      (f.id?'<button class="btn danger block" id="delSess" style="margin-top:8px">Verwijderen</button>':'')+
-    '</div>';
-
-  sheet.querySelectorAll('[data-close]').forEach(b=>b.onclick=closeSheet);
-  sheet.querySelectorAll('#typeSeg [data-type]').forEach(b=>{
-    b.onclick=()=>{
-      collectForm();
-      const oldDefault = TYPES[form.type].label;
-      form.type=b.dataset.type;
-      if(!form.title || form.title===oldDefault) form.title='';
-      renderSheet();
-    };
-  });
-  sheet.querySelectorAll('#feelSeg [data-feel]').forEach(b=>{
-    b.onclick=()=>{ collectForm(); form.feel = (+form.feel===+b.dataset.feel)?0:+b.dataset.feel; renderSheet(); };
-  });
-  const rpe=document.getElementById('fRpe');
-  if(rpe) rpe.oninput=()=>{ form.rpe=rpe.value; document.getElementById('rpeLbl').textContent='Zwaarte (RPE '+rpe.value+'/10)'; };
-  const updPace=()=>{ collectForm(); const d=document.getElementById('fPace'); if(d) d.value = pace(+form.km,+form.minutes)||'—'; };
-  const km=document.getElementById('fKm'); if(km) km.oninput=updPace;
-  const mn=document.getElementById('fMin'); if(mn && km) mn.oninput=updPace;
-  const ae=document.getElementById('addEx');
-  if(ae) ae.onclick=()=>{ collectForm(); form.ex.push({name:'',sets:'',reps:'',kg:''}); renderSheet(); };
-  sheet.querySelectorAll('[data-fill]').forEach(b=>{
-    b.onclick=()=>{
-      collectForm();
-      const lvl = gymLevel(planWeek(form.date));
-      const src = b.dataset.fill==='A'?GYM_A[lvl]:GYM_B[lvl];
-      form.ex = src.ex.map(e=>({name:e.n,sets:e.s,reps:e.r,kg:''}));
-      if(!form.title) form.title = src.label;
-      renderSheet();
-    };
-  });
-  sheet.querySelectorAll('.exrow .del').forEach((b,i)=>{
-    b.onclick=()=>{ collectForm(); form.ex.splice(i,1); renderSheet(); };
-  });
-  document.getElementById('saveSess').onclick=saveSession;
-  const del=document.getElementById('delSess');
-  if(del) del.onclick=()=>{
-    if(confirm('Deze sessie verwijderen?')){
-      DB.sessions = DB.sessions.filter(x=>x.id!==form.id);
-      save(); closeSheet(); render(); toast('Verwijderd');
-    }
-  };
-}
-function exRow(e){
-  return '<div class="exrow">'+
-    '<input class="exn" type="text" value="'+esc(e.name)+'" placeholder="Oefening">'+
-    '<input class="exs" type="text" inputmode="numeric" value="'+esc(e.sets)+'" placeholder="3">'+
-    '<input class="exr" type="text" value="'+esc(e.reps)+'" placeholder="10">'+
-    '<input class="exk" type="text" inputmode="decimal" value="'+esc(e.kg)+'" placeholder="kg">'+
-    '<button class="del">×</button></div>';
-}
-function saveSession(){
-  collectForm();
-  const s = {
-    id: form.id || (Date.now().toString(36)+Math.random().toString(36).slice(2,7)),
-    created: form.created || Date.now(),
-    date: form.date,
-    type: form.type,
-    title: (form.title||'').trim() || TYPES[form.type].label,
-    minutes: +form.minutes||0,
-    km: form.type==='run' ? (+form.km||0) : 0,
-    rpe: +form.rpe||0,
-    feel: +form.feel||0,
-    notes: (form.notes||'').trim(),
-    ex: form.type==='gym' ? (form.ex||[]).filter(e=>e.name && e.name.trim()) : [],
-    planKey: form.planKey||null
-  };
-  const i = DB.sessions.findIndex(x=>x.id===s.id);
-  if(i>=0) DB.sessions[i]=s; else DB.sessions.push(s);
-  save(); closeSheet(); render(); toast(i>=0?'Bijgewerkt ✓':'Sessie opgeslagen ✓');
-}
-
-/* ---------- 12. APP ---------- */
 let currentView='dash';
 function setView(v){
   currentView=v;
@@ -1306,23 +1244,22 @@ function setView(v){
   window.scrollTo(0,0);
 }
 function updateHeader(){
-  const titles={dash:'Dashboard',schema:'Trainingsschema',log:'Logboek',settings:'Instellingen'};
-  const w=planWeek(todayISO()), plan=buildWeek(w);
-  document.getElementById('topTitle').textContent=titles[currentView];
+  const titles={dash:'Dashboard',trainingen:'Trainingen',log:'Logboek',settings:'Instellingen'};
   const d=new Date();
+  const week = sessionsInWeek(mondayOf(d));
   const subs={
     dash: DAYNAMES[(d.getDay()+6)%7]+' '+d.getDate()+' '+MONTHS[d.getMonth()],
-    schema: plan.phase.name+' — '+plan.phase.doel,
-    log: DB.sessions.length+' sessies gelogd',
+    trainingen: DB.templates.length+' trainingen opgeslagen',
+    log: doneSessions().length+' sessies gelogd',
     settings: 'Data staat lokaal op dit toestel'
   };
+  document.getElementById('topTitle').textContent=titles[currentView];
   document.getElementById('topSub').textContent=subs[currentView];
-  document.getElementById('topPill').textContent='Week '+w+(plan.deload?' · deload':'');
+  document.getElementById('topPill').textContent=trainingDays(week)+'/'+(+DB.settings.weeklyGoal||4)+' deze week';
 }
 function render(){
-  renderDash(); renderSchema(); renderLog(); renderSettings(); updateHeader();
+  renderDash(); renderTrainingen(); renderLog(); renderSettings(); updateHeader();
 }
-function renderPlanViews(){ renderDash(); renderSchema(); }
 let toastT=null;
 function toast(msg){
   const t=document.getElementById('toast');
@@ -1330,25 +1267,11 @@ function toast(msg){
   clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),1800);
 }
 
-/* ---------- 12. START ----------
-   Alleen opstarten in de browser. Het bouwscript voor de agendafeed laadt
-   dit bestand buiten de browser en gebruikt dan alleen de planningsfuncties. */
-if(typeof document !== 'undefined'){
-  document.querySelectorAll('nav.bottom button').forEach(b=> b.onclick=()=>setView(b.dataset.view));
-  document.getElementById('fab').onclick=()=>{
-    const today=todayISO(), w=planWeek(today), plan=buildWeek(w);
-    const di=(new Date().getDay()+6)%7;
-    const blocks=plan.days[di].blocks;
-    const idx=blocks.findIndex((b,bi)=>!DB.sessions.some(s=>s.planKey===today+'#'+bi));
-    if(idx>=0 && !plan.days[di].rest) openSession(prefillFromPlan(today,idx));
-    else openSession(null);
-  };
-  document.getElementById('modal').querySelector('.backdrop').onclick=closeSheet;
-  save();
-  render();
-}else if(typeof globalThis !== 'undefined'){
-  globalThis.__schedule = { DB, calEventsForDate, buildICS, buildWeek, planWeek, iso, addDays, parseISO, mondayOf, DEFAULT_CAL_TIMES };
-}
+document.querySelectorAll('nav.bottom button').forEach(b=> b.onclick=()=>setView(b.dataset.view));
+document.getElementById('fab').onclick=openPicker;
+document.getElementById('modal').querySelector('.backdrop').onclick=closeSheet;
+save();
+render();
 </script>
 </body>
 </html>

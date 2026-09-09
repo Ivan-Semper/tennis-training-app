@@ -286,7 +286,8 @@ hr.sep{border:none;border-top:1px solid var(--line);margin:16px 0}
 .vhint{font-size:12.5px;color:var(--muted);margin-top:5px;line-height:1.55}
 .transcript{
   background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:13px 14px;
-  margin-top:14px;font-size:14.5px;line-height:1.55;text-align:left;min-height:52px;color:var(--ink)
+  margin-top:14px;font-size:14.5px;line-height:1.55;text-align:left;min-height:52px;color:var(--ink);
+  max-height:170px;overflow-y:auto
 }
 .transcript .int{color:var(--muted)}
 .transcript.empty-t{color:var(--muted)}
@@ -1123,29 +1124,32 @@ const NUM_UNITS = ['een','één','twee','drie','vier','vijf','zes','zeven','acht
 const NUM_TENS  = ['twintig','dertig','veertig','vijftig','zestig','zeventig','tachtig','negentig'];
 
 function normalizeSpeech(txt){
-  let t = ' '+String(txt||'').toLowerCase().replace(/[.!?;:]/g,' ')+' ';
-  t = t.replace(/(\d)[,](\d)/g, '$1.$2');
-  t = t.replace(/\banderhalf uur\b|\banderhalve uur\b|\banderhalf uurtje\b/g, '1.5 uur');
-  t = t.replace(/\bdrie kwartier\b/g, '45 minuten');
-  t = t.replace(/\b(?:een |één )?kwartier(?:tje)?\b/g, '15 minuten');
-  t = t.replace(/\b(?:een |één )?half ?uur(?:tje)?\b/g, '30 minuten');
+  let t = ' '+String(txt||'').toLowerCase()+' ';
+  t = t.replace(/(\d)\s*[.,]\s*(\d)/g, '$1.$2');   // decimalen eerst, anders sneuvelt de punt
+  t = t.replace(/[!?;:]/g, ' ').replace(/\.(?!\d)/g, ' ');
+  t = t.replace(/\banderhalf\b|\banderhalve\b/g, '1.5');
   const compound = new RegExp('\\b('+NUM_UNITS.join('|')+')en('+NUM_TENS.join('|')+')\\b','g');
   t = t.replace(compound, (m,u,d)=> ' '+(NUM_WORDS[u]+NUM_WORDS[d])+' ');
   t = t.replace(/\b[a-zà-ÿ]+\b/g, w => NUM_WORDS[w]!==undefined ? String(NUM_WORDS[w]) : w);
+  t = t.replace(/\b(\d+(?:\.\d+)?)\s*en\s*(?:1\s*)?half\s*uur(?:tje)?\b/g, (m,n)=> (parseFloat(n)+0.5)+' uur');
+  t = t.replace(/\b(\d+)\s*kwartier(?:tje)?\b/g, (m,n)=> (parseInt(n,10)*15)+' minuten');
+  t = t.replace(/\bkwartier(?:tje)?\b/g, '15 minuten');
+  t = t.replace(/\b(?:1\s*)?half\s*uur(?:tje)?\b/g, '30 minuten');
   return t.replace(/\s+/g,' ');
 }
 
+/* neemt bewust maar één tijdsopgave: "1 uur en 20 minuten" telt samen,
+   losse getallen verderop in de zin niet */
 function parseDuration(t){
-  let mins = 0, found = false;
+  const both = t.match(/(\d+(?:\.\d+)?)\s*(?:uurtjes?|uur|u)\b\s*(?:en\s*)?(\d{1,3})\s*(?:minuten|minuutjes|minuut|min)\b/);
+  if(both) return Math.round(parseFloat(both[1])*60 + parseFloat(both[2]));
   const h = t.match(/(\d+(?:\.\d+)?)\s*(?:uurtjes?|uur|u)\b/);
-  if(h){ mins += parseFloat(h[1])*60; found = true; }
+  if(h) return Math.round(parseFloat(h[1])*60);
   const m = t.match(/(\d+(?:\.\d+)?)\s*(?:minuten|minuutjes|minuut|min)\b/);
-  if(m){ mins += parseFloat(m[1]); found = true; }
-  if(!found){
-    const alt = t.match(/\b(?:in|gedurende|ongeveer)\s+(\d{1,3})\b(?!\s*(?:km|kilometer|meter|kilo|k\b|x|keer|sets?))/);
-    if(alt){ mins = parseFloat(alt[1]); found = true; }
-  }
-  return found && mins>0 ? Math.round(mins) : null;
+  if(m) return Math.round(parseFloat(m[1]));
+  const alt = t.match(/\b(?:in|gedurende|ongeveer)\s+(\d{1,3})\b(?!\s*(?:km|kilometer|meter|kilo|k\b|x|keer|sets?))/);
+  if(alt) return Math.round(parseFloat(alt[1]));
+  return null;
 }
 
 function parseDistance(t){
@@ -1299,8 +1303,9 @@ function voiceToSession(raw){
 
 /* ---------- spraakherkenning ---------- */
 const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+const VOICE_MAX_MS = 5*60*1000;
 let recog = null;
-let voice = { state:'idle', text:'', interim:'', draft:null };
+let voice = { state:'idle', text:'', interim:'', draft:null, stopping:false, startedAt:0, restarts:0 };
 
 const MIC_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+
   '<rect x="9" y="2" width="6" height="12" rx="3" fill="currentColor" stroke="none"/>'+
@@ -1314,7 +1319,7 @@ function abortRecog(){
 }
 
 function openVoice(){
-  voice = { state: SpeechRec ? 'listening' : 'typing', text:'', interim:'', draft:null };
+  voice = { state: SpeechRec ? 'listening' : 'typing', text:'', interim:'', draft:null, stopping:false, startedAt:Date.now(), restarts:0 };
   form = null; tform = null;
   renderVoice();
   if(SpeechRec) startRecog();
@@ -1323,11 +1328,19 @@ function openVoice(){
 function startRecog(){
   abortRecog();
   voice.text=''; voice.interim=''; voice.draft=null;
+  voice.stopping=false; voice.startedAt=Date.now(); voice.restarts=0;
+  voice.state='listening';
+  if(!launchRecog()) return;
+  renderVoice();
+}
+
+/* start de herkenning; bij een te vroege stop pikt onend hem vanzelf weer op */
+function launchRecog(){
   try{ recog = new SpeechRec(); }
-  catch(e){ voice.state='typing'; renderVoice(); return; }
+  catch(e){ voice.state='typing'; renderVoice(); return false; }
   recog.lang = 'nl-NL';
   recog.interimResults = true;
-  recog.continuous = false;
+  recog.continuous = true;
   recog.maxAlternatives = 1;
   recog.onresult = (e)=>{
     let fin='', int='';
@@ -1340,23 +1353,43 @@ function startRecog(){
     paintTranscript();
   };
   recog.onerror = (e)=>{
-    if(e.error==='not-allowed' || e.error==='service-not-allowed') voice.state='denied';
-    else if(e.error==='no-speech') voice.state='nospeech';
-    else voice.state='typing';
-    abortRecog();
-    renderVoice();
+    if(e.error==='not-allowed' || e.error==='service-not-allowed'){ voice.state='denied'; abortRecog(); renderVoice(); }
+    else if(e.error==='audio-capture'){ voice.state='typing'; abortRecog(); renderVoice(); }
+    /* no-speech, aborted, network: onend beslist of we doorgaan */
   };
   recog.onend = ()=>{
     recog = null;
     if(voice.state!=='listening') return;
-    const t = (voice.text+' '+voice.interim).trim();
-    if(t) finishVoice(t); else { voice.state='nospeech'; renderVoice(); }
+    if(voice.interim){ voice.text += voice.interim+' '; voice.interim=''; }
+    const heard = voice.text.trim();
+    if(voice.stopping){
+      if(heard) finishVoice(heard); else { voice.state='nospeech'; renderVoice(); }
+      return;
+    }
+    if(Date.now()-voice.startedAt > VOICE_MAX_MS){ 
+      if(heard) finishVoice(heard); else { voice.state='nospeech'; renderVoice(); }
+      return;
+    }
+    if(!heard && Date.now()-voice.startedAt > 45000){ voice.state='nospeech'; renderVoice(); return; }
+    if(voice.restarts > 120){ 
+      if(heard) finishVoice(heard); else { voice.state='nospeech'; renderVoice(); }
+      return;
+    }
+    voice.restarts++;
+    setTimeout(()=>{ if(voice.state==='listening' && !recog) launchRecog(); }, 250);
   };
-  try{ recog.start(); voice.state='listening'; renderVoice(); }
-  catch(e){ voice.state='typing'; renderVoice(); }
+  try{ recog.start(); return true; }
+  catch(e){
+    recog = null;
+    if(voice.restarts === 0){ voice.state='typing'; renderVoice(); }
+    else { voice.restarts++; setTimeout(()=>{ if(voice.state==='listening' && !recog) launchRecog(); }, 400); }
+    return false;
+  }
 }
 
+/* alleen deze knop beëindigt het luisteren */
 function stopRecog(){
+  voice.stopping = true;
   if(recog){ try{ recog.stop(); return; }catch(e){ abortRecog(); } }
   const t = (voice.text+' '+voice.interim).trim();
   if(t) finishVoice(t); else { voice.state='nospeech'; renderVoice(); }
@@ -1377,6 +1410,7 @@ function paintTranscript(){
   el.classList.toggle('empty-t', !t && !voice.interim);
   el.innerHTML = (t? esc(t) : (voice.interim? '' : 'Zeg bijvoorbeeld: “Ik heb 5 kilometer gelopen in 25 minuten.”'))+
     (voice.interim? ' <span class="int">'+esc(voice.interim)+'</span>' : '');
+  el.scrollTop = el.scrollHeight;
 }
 
 const VOICE_EXAMPLES = [
@@ -1416,11 +1450,11 @@ function renderVoice(){
 
   if(voice.state==='listening'){
     body = '<div class="voicewrap">'+
-      '<button class="orb busy" id="orbStop" aria-label="Stoppen met luisteren">'+MIC_SVG+'</button>'+
+      '<button class="orb busy" id="orbStop" aria-label="Klaar met praten">'+MIC_SVG+'</button>'+
       '<div class="vstatus">Ik luister…</div>'+
-      '<div class="vhint">Vertel wat je hebt gedaan. Tik op <b>Klaar</b> als je uitgesproken bent.</div>'+
+      '<div class="vhint">Neem rustig de tijd — ik blijf luisteren tot jíj op <b>Klaar met praten</b> tikt.</div>'+
       '<div class="transcript empty-t" id="vText"></div>'+
-      '<div class="btnrow" style="margin-top:14px"><button class="btn block" id="vDone">Klaar</button></div>'+
+      '<div class="btnrow" style="margin-top:14px"><button class="btn block" id="vDone">Klaar met praten</button></div>'+
       '<div class="examples"><b>Voorbeelden</b><ul>'+VOICE_EXAMPLES.map(e=>'<li>'+esc(e)+'</li>').join('')+'</ul></div>'+
     '</div>';
   } else if(voice.state==='parsed'){

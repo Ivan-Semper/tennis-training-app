@@ -16,6 +16,22 @@ browser waarin je de app opent. Er wordt niets naar een server gestuurd.
 - **Logboek** — afgeronde sessies per maand, filterbaar per soort
 - **Instellingen** — weekdoel, agendatijd/herinnering, back-up en herstel
 
+## Inspreken
+
+De grote microfoonknop rechtsonder logt een training door hem in te spreken:
+
+> "Ik heb net 5 kilometer hardgelopen in 25 minuten, voelde lekker."
+
+De app haalt er soort, datum, duur, afstand, tempo, zwaarte (RPE), gevoel en
+krachtoefeningen (`3 keer 10 squats met 60 kilo`) uit. Noem je de naam van een
+opgeslagen training, dan wordt die herkend en worden de oefeningen en duur
+overgenomen. Je ziet altijd eerst wat de app ervan begreep en kunt het aanpassen
+voordat je opslaat.
+
+Spraak-naar-tekst gebeurt via de browser (`SpeechRecognition`, nl-NL) en vereist
+HTTPS; het ontleden en opslaan gebeurt volledig lokaal. Werkt de spraakherkenning
+niet, dan valt de app terug op een tekstvak dat dezelfde zin verwerkt.
+
 ## Trainingen aanmaken
 
 In het tabblad **Trainingen** maak je een training aan in één van drie soorten:

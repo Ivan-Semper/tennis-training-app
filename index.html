@@ -10,19 +10,24 @@
 <title>Training — Ivan</title>
 <style>
 :root{
-  --bg:#0e1512;
-  --bg2:#14201b;
-  --card:#182924;
-  --card2:#1e332c;
-  --line:#26433a;
+  --bg:#0b120f;
+  --bg2:#111d18;
+  --card:#152420;
+  --card2:#1c302a;
+  --line:#254238;
   --ink:#eaf5ef;
-  --muted:#8fa89d;
+  --ink2:#cfe0d7;
+  --muted:#93aca1;
   --accent:#38e08b;
+  --on-accent:#04190f;
   --tennis:#38e08b;
   --kracht:#f5b74a;
   --cardio:#4aa8f5;
   --danger:#ff6b6b;
-  --radius:16px;
+  --radius:18px;
+  --shadow:0 6px 20px rgba(0,0,0,.32);
+  --shadow-lg:0 16px 44px rgba(0,0,0,.5);
+  --ease:cubic-bezier(.2,.8,.2,1);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0;color-scheme:dark}
@@ -30,38 +35,50 @@ input[type=range]{accent-color:var(--accent);height:28px}
 input[type=date],input[type=number],input[type=time]{color-scheme:dark}
 body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-  background:var(--bg); color:var(--ink);
-  padding-bottom:calc(78px + env(safe-area-inset-bottom));
+  background:var(--bg);
+  background-image:radial-gradient(120% 60% at 50% -10%, rgba(56,224,139,.13) 0%, rgba(56,224,139,0) 62%);
+  background-attachment:fixed;
+  color:var(--ink);
+  padding-bottom:calc(92px + env(safe-area-inset-bottom));
   -webkit-font-smoothing:antialiased;
+  line-height:1.45;
 }
+body.noscroll{overflow:hidden}
 button,input,select,textarea{font-family:inherit;font-size:16px}
+button{cursor:pointer}
 a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+}
 
 /* ---------- header ---------- */
 header.top{
   position:sticky;top:0;z-index:40;
-  background:linear-gradient(180deg,#12201a 0%, rgba(14,21,18,.96) 100%);
+  background:rgba(11,18,15,.82);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   border-bottom:1px solid var(--line);
   padding:calc(12px + env(safe-area-inset-top)) 16px 12px;
 }
 .top-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.top h1{font-size:18px;margin:0;letter-spacing:.3px}
+.top h1{font-size:19px;margin:0;letter-spacing:-.2px;font-weight:700}
 .top .sub{font-size:12px;color:var(--muted);margin-top:3px}
 .pill{
-  background:var(--card2);border:1px solid var(--line);color:var(--accent);
-  border-radius:999px;padding:6px 12px;font-size:12px;font-weight:600;white-space:nowrap
+  background:rgba(56,224,139,.1);border:1px solid rgba(56,224,139,.28);color:var(--accent);
+  border-radius:999px;padding:6px 12px;font-size:12px;font-weight:700;white-space:nowrap
 }
 
 main{padding:16px 14px 24px;max-width:720px;margin:0 auto}
 .view{display:none}
-.view.active{display:block}
+.view.active{display:block;animation:fadeUp .28s var(--ease)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
 /* ---------- cards ---------- */
 .card{
   background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-  padding:16px;margin-bottom:14px;
+  padding:16px;margin-bottom:12px;box-shadow:var(--shadow);
 }
-.card h2{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 12px}
+.card h2{font-size:12px;text-transform:uppercase;letter-spacing:1.1px;color:var(--muted);margin:0 0 12px;font-weight:700}
 .card h3{font-size:15px;margin:0 0 8px}
 .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .muted{color:var(--muted)}
@@ -70,12 +87,18 @@ main{padding:16px 14px 24px;max-width:720px;margin:0 auto}
 
 /* ---------- hero ---------- */
 .hero{
-  background:linear-gradient(150deg,#1c3a2b 0%, #16261f 60%);
-  border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:14px;
+  position:relative;overflow:hidden;
+  background:linear-gradient(155deg,#1e4331 0%, #16261f 62%);
+  border:1px solid var(--line);border-radius:22px;padding:18px;margin-bottom:12px;
+  box-shadow:var(--shadow);
+}
+.hero::after{
+  content:'';position:absolute;top:-70px;right:-50px;width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(circle, rgba(56,224,139,.22) 0%, rgba(56,224,139,0) 70%);pointer-events:none
 }
 .hero .phase{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent);font-weight:700}
-.hero .wk{font-size:26px;font-weight:700;margin:4px 0 2px}
-.hero .theme{font-size:13px;color:var(--muted)}
+.hero .wk{font-size:27px;font-weight:800;margin:4px 0 2px;letter-spacing:-.5px}
+.hero .theme{font-size:13px;color:var(--ink2)}
 .ringwrap{display:flex;align-items:center;gap:18px;margin-top:14px}
 .ring{position:relative;width:96px;height:96px;flex:0 0 auto}
 .ring svg{transform:rotate(-90deg)}
@@ -113,7 +136,8 @@ main{padding:16px 14px 24px;max-width:720px;margin:0 auto}
 .t-plan{background:rgba(255,255,255,.08);color:var(--muted)}
 
 /* ---------- sessie-items ---------- */
-.sess{display:flex;gap:11px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:13px;margin-bottom:9px;background:var(--card)}
+.sess{display:flex;gap:11px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:14px;margin-bottom:9px;background:var(--card);cursor:pointer;transition:border-color .15s var(--ease),transform .12s var(--ease)}
+.sess:active{transform:scale(.99);border-color:var(--accent)}
 .sess.planned{border-style:dashed;opacity:.9}
 .sess .ic{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex:0 0 auto}
 .sess .body{flex:1;min-width:0}
@@ -123,7 +147,8 @@ main{padding:16px 14px 24px;max-width:720px;margin:0 auto}
 .rpe{font-size:11px;font-weight:700;padding:3px 7px;border-radius:8px;background:rgba(255,255,255,.07);color:var(--muted)}
 
 /* ---------- trainingskaarten ---------- */
-.tpl{display:flex;gap:11px;align-items:flex-start;padding:13px;border:1px solid var(--line);border-radius:14px;margin-bottom:9px;background:var(--card);cursor:pointer}
+.tpl{display:flex;gap:11px;align-items:flex-start;padding:13px;border:1px solid var(--line);border-radius:15px;margin-bottom:9px;background:var(--card);cursor:pointer;transition:border-color .15s var(--ease),transform .12s var(--ease)}
+.tpl:active{transform:scale(.99);border-color:var(--accent)}
 .tpl .ic{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:17px;flex:0 0 auto}
 .tpl .body{flex:1;min-width:0}
 .tpl .ttl{font-size:15px;font-weight:700}
@@ -134,35 +159,52 @@ main{padding:16px 14px 24px;max-width:720px;margin:0 auto}
 /* ---------- buttons ---------- */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:7px;
-  background:var(--accent);color:#082114;border:none;border-radius:12px;
-  padding:12px 16px;font-weight:700;font-size:14px;cursor:pointer;
+  background:var(--accent);color:var(--on-accent);border:none;border-radius:13px;
+  padding:13px 16px;font-weight:700;font-size:14.5px;cursor:pointer;
+  transition:transform .12s var(--ease), filter .12s var(--ease);
 }
-.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
-.btn.small{padding:8px 12px;font-size:13px;border-radius:10px}
+.btn:active{transform:scale(.97);filter:brightness(1.08)}
+.btn.ghost{background:var(--card2);border:1px solid var(--line);color:var(--ink)}
+.btn.small{padding:9px 13px;font-size:13px;border-radius:11px}
 .btn.danger{background:transparent;border:1px solid rgba(255,107,107,.5);color:var(--danger)}
 .btn.block{width:100%}
 .btnrow{display:flex;gap:9px;flex-wrap:wrap}
 
+/* ---------- fab ---------- */
+.fabs{
+  position:fixed;right:16px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:45;
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+}
 .fab{
-  position:fixed;right:16px;bottom:calc(88px + env(safe-area-inset-bottom));z-index:45;
-  width:56px;height:56px;border-radius:50%;background:var(--accent);color:#082114;
-  border:none;font-size:28px;font-weight:700;box-shadow:0 8px 22px rgba(0,0,0,.45);cursor:pointer
+  width:62px;height:62px;border-radius:50%;background:var(--accent);color:var(--on-accent);
+  border:none;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 10px 26px rgba(56,224,139,.32), 0 4px 12px rgba(0,0,0,.4);cursor:pointer;
+  transition:transform .14s var(--ease);
+}
+.fab:active{transform:scale(.92)}
+.fab svg{width:27px;height:27px}
+.fab.mini{
+  width:46px;height:46px;background:var(--card2);color:var(--ink);
+  border:1px solid var(--line);font-size:24px;font-weight:600;line-height:1;
+  box-shadow:var(--shadow);
 }
 
 /* ---------- nav ---------- */
 nav.bottom{
   position:fixed;left:0;right:0;bottom:0;z-index:50;
-  background:rgba(18,32,26,.97);border-top:1px solid var(--line);
+  background:rgba(15,26,21,.9);border-top:1px solid var(--line);
   display:grid;grid-template-columns:repeat(4,1fr);
   padding:8px 4px calc(8px + env(safe-area-inset-bottom));
-  backdrop-filter:blur(10px);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
 }
 nav.bottom button{
-  background:none;border:none;color:var(--muted);font-size:10.5px;font-weight:600;
-  display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 2px;cursor:pointer
+  position:relative;background:none;border:none;color:var(--muted);font-size:10.5px;font-weight:600;
+  display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px;cursor:pointer;
+  transition:color .18s var(--ease)
 }
-nav.bottom button .i{font-size:19px;line-height:1}
+nav.bottom button .i{font-size:19px;line-height:1;transition:transform .2s var(--ease)}
 nav.bottom button.active{color:var(--accent)}
+nav.bottom button.active .i{transform:translateY(-2px) scale(1.08)}
 
 /* ---------- forms ---------- */
 label.f{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin:12px 0 5px}
@@ -175,24 +217,29 @@ textarea{min-height:84px;resize:vertical;line-height:1.5}
 .seg{display:flex;gap:6px;flex-wrap:wrap}
 .seg button{
   flex:1 1 auto;min-width:64px;background:var(--bg2);border:1px solid var(--line);color:var(--muted);
-  border-radius:11px;padding:10px 8px;font-size:12.5px;font-weight:600;cursor:pointer
+  border-radius:12px;padding:11px 8px;font-size:12.5px;font-weight:600;cursor:pointer;
+  transition:background .15s var(--ease), color .15s var(--ease), transform .12s var(--ease)
 }
-.seg button.on{background:var(--accent);border-color:var(--accent);color:#082114}
+.seg button:active{transform:scale(.96)}
+.seg button.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 .inline{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .inline3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
 
 /* ---------- modal ---------- */
 .modal{position:fixed;inset:0;z-index:100;display:none}
 .modal.open{display:block}
-.modal .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.6)}
+.modal .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.62);animation:bdIn .2s ease}
+@keyframes bdIn{from{opacity:0}to{opacity:1}}
 .sheet{
   position:absolute;left:0;right:0;bottom:0;max-height:92vh;overflow-y:auto;
-  background:var(--bg2);border-top-left-radius:22px;border-top-right-radius:22px;
+  background:var(--bg2);border-top-left-radius:24px;border-top-right-radius:24px;
   padding:8px 16px calc(24px + env(safe-area-inset-bottom));
-  border-top:1px solid var(--line);
+  border-top:1px solid var(--line);box-shadow:var(--shadow-lg);
+  animation:sheetIn .3s var(--ease);-webkit-overflow-scrolling:touch;
 }
-.grab{width:40px;height:4px;border-radius:99px;background:#3a5a4d;margin:8px auto 4px}
-.sheet h2{font-size:17px;margin:6px 0 2px}
+@keyframes sheetIn{from{transform:translateY(100%)}to{transform:none}}
+.grab{width:42px;height:4px;border-radius:99px;background:#3a5a4d;margin:8px auto 4px}
+.sheet h2{font-size:18px;margin:6px 0 2px;letter-spacing:-.2px}
 
 /* ---------- oefening- en focusrijen ---------- */
 .exrow{display:grid;grid-template-columns:1fr 46px 46px 56px 30px;gap:6px;margin-bottom:7px;align-items:center}
@@ -208,14 +255,54 @@ textarea{min-height:84px;resize:vertical;line-height:1.5}
 
 .empty{text-align:center;color:var(--muted);font-size:13px;padding:22px 10px;line-height:1.6}
 .check{width:26px;height:26px;border-radius:8px;border:1.5px solid var(--line);background:var(--bg2);display:flex;align-items:center;justify-content:center;color:transparent;font-size:14px;cursor:pointer;flex:0 0 auto}
-.check.on{background:var(--accent);border-color:var(--accent);color:#082114}
+.check.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 .toast{
-  position:fixed;left:50%;transform:translateX(-50%);bottom:calc(96px + env(safe-area-inset-bottom));
-  background:var(--accent);color:#082114;padding:11px 18px;border-radius:12px;font-weight:700;font-size:13px;
-  z-index:200;opacity:0;pointer-events:none;transition:opacity .2s
+  position:fixed;left:50%;transform:translateX(-50%) translateY(8px);bottom:calc(100px + env(safe-area-inset-bottom));
+  background:var(--accent);color:var(--on-accent);padding:12px 18px;border-radius:13px;font-weight:700;font-size:13px;
+  z-index:200;opacity:0;pointer-events:none;transition:opacity .2s var(--ease),transform .2s var(--ease);
+  box-shadow:var(--shadow-lg);max-width:88vw;text-align:center
 }
-.toast.show{opacity:1}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 hr.sep{border:none;border-top:1px solid var(--line);margin:16px 0}
+
+/* ---------- spraak / voice ---------- */
+.voicewrap{text-align:center;padding:14px 0 4px}
+.orb{
+  position:relative;width:112px;height:112px;border-radius:50%;margin:6px auto 0;
+  background:radial-gradient(circle at 50% 35%, #4bf39c 0%, #1f9c5f 70%);
+  color:var(--on-accent);border:none;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 12px 34px rgba(56,224,139,.32);cursor:pointer;transition:transform .15s var(--ease)
+}
+.orb:active{transform:scale(.95)}
+.orb svg{width:44px;height:44px}
+.orb.idle{background:var(--card2);color:var(--accent);box-shadow:none;border:1px solid var(--line)}
+.orb.busy::before,.orb.busy::after{
+  content:'';position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(56,224,139,.5);
+  animation:ripple 1.9s ease-out infinite
+}
+.orb.busy::after{animation-delay:.95s}
+@keyframes ripple{0%{transform:scale(1);opacity:.65}100%{transform:scale(1.55);opacity:0}}
+.vstatus{font-size:15px;font-weight:700;margin-top:16px}
+.vhint{font-size:12.5px;color:var(--muted);margin-top:5px;line-height:1.55}
+.transcript{
+  background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:13px 14px;
+  margin-top:14px;font-size:14.5px;line-height:1.55;text-align:left;min-height:52px;color:var(--ink)
+}
+.transcript .int{color:var(--muted)}
+.transcript.empty-t{color:var(--muted)}
+.examples{text-align:left;margin-top:14px}
+.examples b{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted)}
+.examples ul{margin:8px 0 0;padding-left:18px}
+.examples li{font-size:13px;color:var(--ink2);line-height:1.6}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{
+  display:flex;align-items:center;gap:7px;background:var(--card2);border:1px solid var(--line);
+  border-radius:12px;padding:9px 12px;font-size:13px;font-weight:600
+}
+.chip .k{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);font-weight:700}
+.chip.miss{border-style:dashed;color:var(--muted);background:transparent}
+.chip.hi{border-color:rgba(56,224,139,.45);background:rgba(56,224,139,.09)}
+.vwarn{font-size:12.5px;color:var(--kracht);margin-top:12px;line-height:1.5}
 </style>
 </head>
 <body>
@@ -237,7 +324,15 @@ hr.sep{border:none;border-top:1px solid var(--line);margin:16px 0}
   <section id="view-settings" class="view"></section>
 </main>
 
-<button class="fab" id="fab" aria-label="Training loggen">+</button>
+<div class="fabs">
+  <button class="fab mini" id="fabAdd" aria-label="Training kiezen of handmatig loggen">+</button>
+  <button class="fab" id="fabMic" aria-label="Training inspreken">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="9" y="2" width="6" height="12" rx="3" fill="currentColor" stroke="none"/>
+      <path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M8.5 21h7"/>
+    </svg>
+  </button>
+</div>
 
 <nav class="bottom">
   <button data-view="dash" class="active"><span class="i">📊</span>Dashboard</button>
@@ -248,10 +343,10 @@ hr.sep{border:none;border-top:1px solid var(--line);margin:16px 0}
 
 <div class="modal" id="modal">
   <div class="backdrop" data-close></div>
-  <div class="sheet" id="sheet"></div>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Sessie"></div>
 </div>
 
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 /* ============================================================
@@ -327,7 +422,7 @@ function fmtMin(m){ m=Math.round(m); if(m<60) return m+' min'; const h=Math.floo
 function fmtHours(m){ return (m/60).toFixed(1).replace('.',',')+'u'; }
 function pace(km,min){ if(!km||!min) return null; const p=min/km; const mm=Math.floor(p), ss=Math.round((p-mm)*60); return mm+':'+pad(ss===60?0:ss)+' /km'; }
 function tonnage(s){ if(!s.ex) return 0; return s.ex.reduce((t,e)=> t + (+e.sets||0)*(+e.reps||0)*(+e.kg||0), 0); }
-function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
 function dayStreak(){
   let streak=0; let d=new Date(); d.setHours(0,0,0,0);
@@ -422,7 +517,7 @@ function svgChart(data){
     }
     const lbl = d.monday.getDate()+'/'+(d.monday.getMonth()+1);
     labels+='<text x="'+(padX+i*bw+bw/2).toFixed(1)+'" y="'+(H-8)+'" fill="#8fa89d" font-size="9" text-anchor="middle">'+lbl+'</text>';
-    if(d.total) labels+='<text x="'+(padX+i*bw+bw/2).toFixed(1)+'" y="'+(y-4).toFixed(1)+'" fill="#8fa89d" font-size="8.5" text-anchor="middle">'+Math.round(d.total/60*10)/10+'u</text>';
+    if(d.total) labels+='<text x="'+(padX+i*bw+bw/2).toFixed(1)+'" y="'+(y-4).toFixed(1)+'" fill="#8fa89d" font-size="8.5" text-anchor="middle">'+(Math.round(d.total/60*10)/10).toFixed(1).replace('.',',')+'u</text>';
   });
   return '<svg class="chart" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none">'+grid+bars+labels+'</svg>';
 }
@@ -486,7 +581,7 @@ function renderDash(){
   '</div>'+
 
   '<div class="card"><h2>Vandaag gelogd</h2>'+
-    (todayDone.length? todayDone.map(sessHTML).join('') : '<div class="empty">Nog niets gelogd vandaag. Tik op <b>+</b>.</div>')+
+    (todayDone.length? todayDone.map(sessHTML).join('') : '<div class="empty">Nog niets gelogd vandaag.<br>Tik rechtsonder op 🎤 en vertel wat je hebt gedaan.</div>')+
   '</div>'+
 
   '<div class="card"><h2>Deze week in cijfers</h2>'+
@@ -497,8 +592,10 @@ function renderDash(){
     '</div>'+
     '<hr class="sep">'+
     '<div class="small muted">Vorige week: '+fmtHours(sumMin(prevWeek))+' · '+trainingDays(prevWeek)+' dagen · '+sumKm(prevWeek.filter(s=>s.type==='cardio')).toFixed(1).replace('.',',')+' km</div>'+
-    '<div class="bar"><i style="width:'+Math.min(100, sumMin(prevWeek)? (min/sumMin(prevWeek))*100 : (min?100:0))+'%"></i></div>'+
-    '<div class="tiny muted" style="margin-top:6px">'+(sumMin(prevWeek)? (min>=sumMin(prevWeek)?'+':'')+Math.round((min/sumMin(prevWeek)-1)*100)+'% t.o.v. vorige week' : 'Nog geen vergelijking')+'</div>'+
+    (sumMin(prevWeek)
+      ? '<div class="bar"><i style="width:'+Math.min(100,(min/sumMin(prevWeek))*100)+'%"></i></div>'+
+        '<div class="tiny muted" style="margin-top:6px">'+(min>=sumMin(prevWeek)?'+':'')+Math.round((min/sumMin(prevWeek)-1)*100)+'% t.o.v. vorige week</div>'
+      : '<div class="tiny muted" style="margin-top:6px">Nog geen vergelijking</div>')+
   '</div>'+
 
   '<div class="card"><h2>Laatste 8 weken</h2>'+
@@ -528,7 +625,7 @@ function renderDash(){
   '</div>'+
 
   '<div class="card"><div class="row" style="margin-bottom:10px"><h2 style="margin:0">Recent</h2><button class="btn ghost small" id="goLog">Alles →</button></div>'+
-    (recent.length? recent.map(sessHTML).join('') : '<div class="empty">Nog niets gelogd. Tik op <b>+</b> om je eerste sessie toe te voegen.</div>')+
+    (recent.length? recent.map(sessHTML).join('') : '<div class="empty">Nog niets gelogd.<br>Tik rechtsonder op 🎤 en vertel gewoon wat je hebt gedaan.</div>')+
   '</div>';
 
   const gt=document.getElementById('goTpl'); if(gt) gt.onclick=()=>setView('trainingen');
@@ -1012,6 +1109,379 @@ function openPicker(){
   });
 }
 
+/* ============================================================
+   10b. SPRAAK → SESSIE
+   De tekst wordt lokaal ontleed; er gaat geen data naar een server.
+   ============================================================ */
+const NUM_WORDS = {
+  nul:0, een:1, 'één':1, twee:2, drie:3, vier:4, vijf:5, zes:6, zeven:7, acht:8, negen:9,
+  tien:10, elf:11, twaalf:12, dertien:13, veertien:14, vijftien:15, zestien:16, zeventien:17,
+  achttien:18, negentien:19, twintig:20, dertig:30, veertig:40, vijftig:50, zestig:60,
+  zeventig:70, tachtig:80, negentig:90, honderd:100
+};
+const NUM_UNITS = ['een','één','twee','drie','vier','vijf','zes','zeven','acht','negen'];
+const NUM_TENS  = ['twintig','dertig','veertig','vijftig','zestig','zeventig','tachtig','negentig'];
+
+function normalizeSpeech(txt){
+  let t = ' '+String(txt||'').toLowerCase().replace(/[.!?;:]/g,' ')+' ';
+  t = t.replace(/(\d)[,](\d)/g, '$1.$2');
+  t = t.replace(/\banderhalf uur\b|\banderhalve uur\b|\banderhalf uurtje\b/g, '1.5 uur');
+  t = t.replace(/\bdrie kwartier\b/g, '45 minuten');
+  t = t.replace(/\b(?:een |één )?kwartier(?:tje)?\b/g, '15 minuten');
+  t = t.replace(/\b(?:een |één )?half ?uur(?:tje)?\b/g, '30 minuten');
+  const compound = new RegExp('\\b('+NUM_UNITS.join('|')+')en('+NUM_TENS.join('|')+')\\b','g');
+  t = t.replace(compound, (m,u,d)=> ' '+(NUM_WORDS[u]+NUM_WORDS[d])+' ');
+  t = t.replace(/\b[a-zà-ÿ]+\b/g, w => NUM_WORDS[w]!==undefined ? String(NUM_WORDS[w]) : w);
+  return t.replace(/\s+/g,' ');
+}
+
+function parseDuration(t){
+  let mins = 0, found = false;
+  const h = t.match(/(\d+(?:\.\d+)?)\s*(?:uurtjes?|uur|u)\b/);
+  if(h){ mins += parseFloat(h[1])*60; found = true; }
+  const m = t.match(/(\d+(?:\.\d+)?)\s*(?:minuten|minuutjes|minuut|min)\b/);
+  if(m){ mins += parseFloat(m[1]); found = true; }
+  if(!found){
+    const alt = t.match(/\b(?:in|gedurende|ongeveer)\s+(\d{1,3})\b(?!\s*(?:km|kilometer|meter|kilo|k\b|x|keer|sets?))/);
+    if(alt){ mins = parseFloat(alt[1]); found = true; }
+  }
+  return found && mins>0 ? Math.round(mins) : null;
+}
+
+function parseDistance(t){
+  let m = t.match(/(\d+(?:\.\d+)?)\s*(?:kilometers?|km|k)\b/);
+  if(m) return Math.round(parseFloat(m[1])*100)/100;
+  m = t.match(/(\d+(?:\.\d+)?)\s*meter\b/);
+  if(m) return Math.round(parseFloat(m[1]))/1000;
+  return null;
+}
+
+const TYPE_HINTS = {
+  cardio: ['hardgelopen','hardlopen','hardloop','gelopen','loopje','rondje','duurloop','joggen','gejogd','tempoloop','gefietst','fietsen','fiets','gezwommen','zwemmen','geroeid','roeien','crosstrainer','gewandeld','wandeling','wandelen','cardio','intervallen'],
+  kracht: ['kracht','krachttraining','gym','fitness','sportschool','squat','squats','bankdrukken','deadlift','deadlifts','rdl','hip thrust','optrekken','pull ups','lat pulldown','gewichten','benen getraind','bovenlijf','push dag','pull dag'],
+  tennis: ['tennis','getennist','tennistraining','wedstrijd','match','competitie','toernooi','partij','rally','forehand','backhand','service','opslag','volley','smash','baantje','ballen geslagen']
+};
+const CARDIO_HINTS = [
+  ['Fietsen',     ['gefietst','fietsen','fiets','wielrennen','spinning']],
+  ['Zwemmen',     ['gezwommen','zwemmen','zwem','baantjes getrokken']],
+  ['Roeien',      ['geroeid','roeien','roeimachine']],
+  ['Crosstrainer',['crosstrainer','elliptical']],
+  ['Wandelen',    ['gewandeld','wandeling','wandelen','gelopen rondje wandelen']],
+  ['Hardlopen',   ['hardgelopen','hardlopen','hardloop','gelopen','joggen','gejogd','duurloop','loopje','tempoloop']]
+];
+
+function parseType(t){
+  const score = {};
+  Object.keys(TYPE_HINTS).forEach(type=>{
+    score[type] = TYPE_HINTS[type].reduce((n,w)=> n + (t.indexOf(' '+w)>=0 || t.indexOf(w+' ')>=0 ? 1 : 0), 0);
+  });
+  let best = null;
+  Object.keys(score).forEach(type=>{ if(score[type] > (best?score[best]:0)) best = type; });
+  if(best) return best;
+  return parseDistance(t)!=null ? 'cardio' : 'tennis';
+}
+function parseCardioKind(t){
+  for(const [kind, words] of CARDIO_HINTS){
+    if(words.some(w=> t.indexOf(' '+w)>=0 || t.indexOf(w+' ')>=0)) return kind;
+  }
+  return null;
+}
+
+function parseDate(t){
+  const today = new Date(); today.setHours(0,0,0,0);
+  const back = n => ({ date: iso(addDays(today,-n)), explicit:true });
+  if(/\beergisteren\b/.test(t)) return back(2);
+  if(/\bgisteren\b/.test(t)) return back(1);
+  const ago = t.match(/(\d+)\s*dag(?:en)?\s*geleden/);
+  if(ago) return back(Math.min(365, parseInt(ago[1],10)));
+  const vorige = /\bvorige week\b|\bafgelopen week\b/.test(t);
+  for(let i=0;i<7;i++){
+    if(new RegExp('\\b'+DAYNAMES[i].toLowerCase()+'\\b').test(t)){
+      let diff = ((new Date().getDay()+6)%7) - i;
+      if(diff<0) diff += 7;
+      return back(diff + (vorige?7:0));
+    }
+  }
+  return { date: iso(today), explicit:false };
+}
+
+function parseRpe(t){
+  const m = t.match(/(?:rpe|zwaarte|intensiteit)\s*(?:van\s*)?(\d{1,2})/);
+  if(m){ const v = parseInt(m[1],10); if(v>=1 && v<=10) return v; }
+  if(/\b(kapot|gesloopt|afgezien|alles gegeven|maximaal|keihard)\b/.test(t)) return 9;
+  if(/\b(zwaar|pittig|intensief|zwaarder)\b/.test(t)) return 8;
+  if(/\b(stevig|behoorlijk)\b/.test(t)) return 7;
+  if(/\b(rustig|makkelijk|licht|soepel|herstel)\b/.test(t)) return 4;
+  return null;
+}
+function parseFeel(t){
+  if(/\b(top|geweldig|super|fantastisch|perfect|heel goed)\b/.test(t)) return 5;
+  if(/\b(goed|lekker|prima|fijn|soepel|sterk)\b/.test(t)) return 4;
+  if(/\b(matig|redelijk|ging wel|beetje moe)\b/.test(t)) return 3;
+  if(/\b(moe|zwaar in de benen|niet lekker|stroef|slecht)\b/.test(t)) return 2;
+  if(/\b(beroerd|vreselijk|geblesseerd|pijn)\b/.test(t)) return 1;
+  return null;
+}
+
+/* "3 keer 10 squats met 60 kilo en 4 sets van 8 bankdrukken" */
+function parseExercises(t){
+  const stop = /\b(met|op|van|voor|gedaan|deed|ik|heb|ben|en|reps?|herhalingen|kilo|kilogram|kg|gewicht|daarna|toen|vervolgens|nog|een|de|het|training|gym|krachttraining|fitness|sportschool|minuten|minuut|min|uur|uurtje|seconden|sec)\b/g;
+  return t.split(/\s*(?:,|\ben daarna\b|\bdaarna\b|\bvervolgens\b|\ben toen\b|\btoen\b|\bplus\b|\ben\b)\s*/)
+    .map(seg=>{
+      const sr = seg.match(/(\d{1,2})\s*(?:x|keer|maal|sets? van|setjes van|series van|sets|setjes)\s*(\d{1,3})/);
+      if(!sr) return null;
+      const kg = seg.match(/(\d{1,3}(?:\.\d+)?)\s*(?:kg|kilo|kilogram)\b/);
+      const words = seg.replace(sr[0],' ').replace(kg?kg[0]:'',' ').replace(stop,' ').replace(/\d+/g,' ')
+        .replace(/\s+/g,' ').trim().split(' ').filter(Boolean).slice(-4);
+      const name = words.join(' ');
+      if(name.length < 3) return null;
+      return { name:name.charAt(0).toUpperCase()+name.slice(1), sets:sr[1], reps:sr[2], kg:kg?kg[1]:'' };
+    })
+    .filter(Boolean).slice(0,10);
+}
+
+/* herkent een van je eigen trainingen als je de naam noemt */
+function flatten(s){ return ' '+String(s||'').toLowerCase().replace(/[^a-zà-ÿ0-9]+/g,' ').trim()+' '; }
+function matchTemplate(t){
+  const hay = flatten(t);
+  let best = null;
+  DB.templates.forEach(tpl=>{
+    const n = flatten(tpl.name);
+    if(n.trim().length < 3) return;
+    if(hay.indexOf(n.slice(0,-1)) >= 0 && (!best || n.length > flatten(best.name).length)) best = tpl;
+  });
+  return best;
+}
+
+function voiceToSession(raw){
+  const t = normalizeSpeech(raw);
+  const tpl = matchTemplate(raw);
+  const type = tpl ? tpl.type : parseType(t);
+  const d = parseDate(t);
+  let minutes = parseDuration(t);
+  let km = type==='cardio' ? parseDistance(t) : null;
+  const rpe = parseRpe(t);
+  const feel = parseFeel(t);
+  let ex = type==='kracht' ? parseExercises(t) : [];
+  let cardioKind = type==='cardio' ? (parseCardioKind(t) || CARDIO_KINDS[0]) : '';
+  const fromTpl = { minutes:false, ex:false, km:false };
+
+  if(tpl){
+    if(minutes==null && +tpl.minutes){ minutes = +tpl.minutes; fromTpl.minutes = true; }
+    if(!ex.length && type==='kracht' && (tpl.ex||[]).length){
+      ex = tpl.ex.map(e=>({name:e.name, sets:e.sets, reps:e.reps, kg:''}));
+      fromTpl.ex = true;
+    }
+    if(km==null && type==='cardio' && +tpl.km){ km = +tpl.km; fromTpl.km = true; }
+    if(type==='cardio' && tpl.cardioKind && !parseCardioKind(t)) cardioKind = tpl.cardioKind;
+  }
+
+  const note = String(raw||'').trim();
+  return {
+    id:null, created:null,
+    date: d.date,
+    time: DB.settings.defaultTime||'18:00',
+    type: type,
+    title: tpl ? tpl.name : (type==='cardio' ? cardioKind : typeOf(type).label),
+    templateId: tpl ? tpl.id : null,
+    minutes: minutes || '',
+    km: km!=null ? String(km) : '',
+    cardioKind: cardioKind,
+    rpe: rpe || 6,
+    feel: feel || 0,
+    notes: note ? note.charAt(0).toUpperCase()+note.slice(1) : '',
+    ex: ex,
+    focus: type==='tennis' && tpl ? (tpl.focus||[]).map(f=>({t:f,d:false})) : [],
+    done: true,
+    got: { date:d.explicit, minutes:minutes!=null, km:km!=null, rpe:rpe!=null, feel:feel!=null, ex:ex.length>0, tpl:!!tpl, fromTpl:fromTpl }
+  };
+}
+
+/* ---------- spraakherkenning ---------- */
+const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recog = null;
+let voice = { state:'idle', text:'', interim:'', draft:null };
+
+const MIC_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+
+  '<rect x="9" y="2" width="6" height="12" rx="3" fill="currentColor" stroke="none"/>'+
+  '<path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M8.5 21h7"/></svg>';
+
+function abortRecog(){
+  if(!recog) return;
+  const r = recog; recog = null;
+  r.onresult = r.onerror = r.onend = null;
+  try{ r.abort(); }catch(e){ /* al gestopt */ }
+}
+
+function openVoice(){
+  voice = { state: SpeechRec ? 'listening' : 'typing', text:'', interim:'', draft:null };
+  form = null; tform = null;
+  renderVoice();
+  if(SpeechRec) startRecog();
+}
+
+function startRecog(){
+  abortRecog();
+  voice.text=''; voice.interim=''; voice.draft=null;
+  try{ recog = new SpeechRec(); }
+  catch(e){ voice.state='typing'; renderVoice(); return; }
+  recog.lang = 'nl-NL';
+  recog.interimResults = true;
+  recog.continuous = false;
+  recog.maxAlternatives = 1;
+  recog.onresult = (e)=>{
+    let fin='', int='';
+    for(let i=e.resultIndex; i<e.results.length; i++){
+      const r = e.results[i];
+      if(r.isFinal) fin += r[0].transcript+' '; else int += r[0].transcript;
+    }
+    if(fin) voice.text += fin;
+    voice.interim = int;
+    paintTranscript();
+  };
+  recog.onerror = (e)=>{
+    if(e.error==='not-allowed' || e.error==='service-not-allowed') voice.state='denied';
+    else if(e.error==='no-speech') voice.state='nospeech';
+    else voice.state='typing';
+    abortRecog();
+    renderVoice();
+  };
+  recog.onend = ()=>{
+    recog = null;
+    if(voice.state!=='listening') return;
+    const t = (voice.text+' '+voice.interim).trim();
+    if(t) finishVoice(t); else { voice.state='nospeech'; renderVoice(); }
+  };
+  try{ recog.start(); voice.state='listening'; renderVoice(); }
+  catch(e){ voice.state='typing'; renderVoice(); }
+}
+
+function stopRecog(){
+  if(recog){ try{ recog.stop(); return; }catch(e){ abortRecog(); } }
+  const t = (voice.text+' '+voice.interim).trim();
+  if(t) finishVoice(t); else { voice.state='nospeech'; renderVoice(); }
+}
+
+function finishVoice(text){
+  abortRecog();
+  voice.text = text; voice.interim = '';
+  voice.draft = voiceToSession(text);
+  voice.state = 'parsed';
+  renderVoice();
+}
+
+function paintTranscript(){
+  const el = document.getElementById('vText');
+  if(!el) return;
+  const t = voice.text.trim();
+  el.classList.toggle('empty-t', !t && !voice.interim);
+  el.innerHTML = (t? esc(t) : (voice.interim? '' : 'Zeg bijvoorbeeld: “Ik heb 5 kilometer gelopen in 25 minuten.”'))+
+    (voice.interim? ' <span class="int">'+esc(voice.interim)+'</span>' : '');
+}
+
+const VOICE_EXAMPLES = [
+  'Ik heb net 5 kilometer hardgelopen in 25 minuten, voelde lekker.',
+  'Gisteren een uur getennist, was pittig.',
+  'Krachttraining van 45 minuten: 3 keer 10 squats met 60 kilo en 4 sets van 8 bankdrukken.',
+  'Zaterdag 40 minuten gefietst, rustig aan.'
+];
+
+function draftChip(k, v, ok){
+  return '<div class="chip '+(ok?'hi':'miss')+'"><span class="k">'+esc(k)+'</span>'+esc(v)+'</div>';
+}
+function draftSummary(d){
+  const c = [];
+  c.push(draftChip('Soort', typeOf(d.type).icon+' '+typeOf(d.type).label, true));
+  if(d.got.tpl) c.push(draftChip('Training', d.title, true));
+  c.push(draftChip('Datum', fmtDate(d.date)+(d.got.date?'':' (aangenomen)'), true));
+  c.push(draftChip('Duur', d.minutes? fmtMin(d.minutes)+(d.got.fromTpl.minutes?' (uit training)':'') : 'niet gehoord', !!d.minutes));
+  if(d.type==='cardio'){
+    c.push(draftChip('Soort cardio', d.cardioKind, true));
+    c.push(draftChip('Afstand', d.km? String(d.km).replace('.',',')+' km' : 'niet gehoord', !!d.km));
+    const p = pace(+d.km, +d.minutes);
+    if(p) c.push(draftChip('Tempo', p, true));
+  }
+  if(d.type==='kracht') c.push(draftChip('Oefeningen', d.ex.length? d.ex.length+(d.got.fromTpl.ex?' (uit training)':' herkend') : 'niet gehoord', !!d.ex.length));
+  c.push(draftChip('Zwaarte', 'RPE '+d.rpe, d.got.rpe));
+  if(d.feel) c.push(draftChip('Gevoel', FEELS[d.feel-1], true));
+  return '<div class="chips">'+c.join('')+'</div>'+
+    (d.ex.length? '<div class="tiny muted" style="margin-top:10px">'+
+      d.ex.map(e=>esc(e.name)+' '+(e.sets||'')+'×'+(e.reps||'')+(e.kg?' @ '+e.kg+'kg':'')).join(' · ')+'</div>' : '');
+}
+
+function renderVoice(){
+  const head = '<div class="row"><h2>Training inspreken</h2>'+
+    '<button class="btn ghost small" data-close>Sluiten</button></div>';
+  let body = '';
+
+  if(voice.state==='listening'){
+    body = '<div class="voicewrap">'+
+      '<button class="orb busy" id="orbStop" aria-label="Stoppen met luisteren">'+MIC_SVG+'</button>'+
+      '<div class="vstatus">Ik luister…</div>'+
+      '<div class="vhint">Vertel wat je hebt gedaan. Tik op <b>Klaar</b> als je uitgesproken bent.</div>'+
+      '<div class="transcript empty-t" id="vText"></div>'+
+      '<div class="btnrow" style="margin-top:14px"><button class="btn block" id="vDone">Klaar</button></div>'+
+      '<div class="examples"><b>Voorbeelden</b><ul>'+VOICE_EXAMPLES.map(e=>'<li>'+esc(e)+'</li>').join('')+'</ul></div>'+
+    '</div>';
+  } else if(voice.state==='parsed'){
+    const d = voice.draft;
+    const warn = !d.minutes ? '<div class="vwarn">⚠️ Ik heb geen duur gehoord. Tik op <b>Aanpassen</b> om die in te vullen.</div>' : '';
+    body = '<div style="padding:6px 0 2px">'+
+      '<div class="vhint" style="margin-top:0">Dit heb ik ervan begrepen:</div>'+
+      draftSummary(d)+ warn +
+      '<div class="transcript" style="margin-top:14px">'+esc(voice.text)+'</div>'+
+      '<div style="margin-top:16px"><button class="btn block" id="vSave">Opslaan</button></div>'+
+      '<div class="btnrow" style="margin-top:9px">'+
+        '<button class="btn ghost small" id="vEdit" style="flex:1">Aanpassen</button>'+
+        '<button class="btn ghost small" id="vAgain" style="flex:1">Opnieuw inspreken</button>'+
+      '</div>'+
+    '</div>';
+  } else if(voice.state==='denied'){
+    body = '<div class="voicewrap">'+
+      '<button class="orb idle" id="orbStart" aria-label="Opnieuw proberen">'+MIC_SVG+'</button>'+
+      '<div class="vstatus">Geen toegang tot de microfoon</div>'+
+      '<div class="vhint">Sta de microfoon toe voor deze site (iPhone: Instellingen → Safari → Microfoon) en probeer het opnieuw. Of typ het gewoon.</div>'+
+      '<div class="btnrow" style="margin-top:16px">'+
+        '<button class="btn small" id="vRetry" style="flex:1">Opnieuw</button>'+
+        '<button class="btn ghost small" id="vType" style="flex:1">Typen</button>'+
+      '</div></div>';
+  } else if(voice.state==='nospeech'){
+    body = '<div class="voicewrap">'+
+      '<button class="orb idle" id="orbStart" aria-label="Opnieuw proberen">'+MIC_SVG+'</button>'+
+      '<div class="vstatus">Ik heb niets gehoord</div>'+
+      '<div class="vhint">Probeer het nog een keer, iets dichter bij de microfoon.</div>'+
+      '<div class="btnrow" style="margin-top:16px">'+
+        '<button class="btn small" id="vRetry" style="flex:1">Opnieuw</button>'+
+        '<button class="btn ghost small" id="vType" style="flex:1">Typen</button>'+
+      '</div></div>';
+  } else {
+    body = '<div style="padding:4px 0 2px">'+
+      '<div class="vhint" style="margin-top:0">'+(SpeechRec?'Typ of dicteer met de microfoon van je toetsenbord.':'Spraakherkenning werkt niet in deze browser. Typ of dicteer met de microfoontoets van je toetsenbord — de app leest het net zo goed.')+'</div>'+
+      '<textarea id="vInput" placeholder="Bijv: net 5 kilometer gelopen in 25 minuten, voelde lekker">'+esc(voice.text)+'</textarea>'+
+      '<div style="margin-top:12px"><button class="btn block" id="vParse">Verwerken</button></div>'+
+      (SpeechRec? '<div style="margin-top:9px"><button class="btn ghost small block" id="vRetry">🎤 Toch inspreken</button></div>':'')+
+      '<div class="examples"><b>Voorbeelden</b><ul>'+VOICE_EXAMPLES.map(e=>'<li>'+esc(e)+'</li>').join('')+'</ul></div>'+
+    '</div>';
+  }
+
+  sheetHTML(head + body);
+  const on = (id, fn)=>{ const el = document.getElementById(id); if(el) el.onclick = fn; };
+  on('orbStop', stopRecog);
+  on('vDone', stopRecog);
+  on('orbStart', startRecog);
+  on('vRetry', startRecog);
+  on('vAgain', startRecog);
+  on('vType', ()=>{ voice.state='typing'; renderVoice(); });
+  on('vParse', ()=>{
+    const v = (document.getElementById('vInput').value||'').trim();
+    if(!v){ toast('Nog niets ingevuld'); return; }
+    finishVoice(v);
+  });
+  on('vSave', ()=>{ form = voice.draft; saveSession(); });
+  on('vEdit', ()=>{ openSession(voice.draft); });
+  if(voice.state==='listening') paintTranscript();
+}
+
 /* ---------- 11. AGENDA / ICS ---------- */
 function icsEsc(s){
   return String(s==null?'':s)
@@ -1140,7 +1610,7 @@ function renderLog(){
         '<h2 style="font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:18px 0 10px">'+k+' · '+fmtHours(sumMin(monthGroups[k]))+'</h2>'+
         monthGroups[k].map(sessHTML).join('')
       ).join('')
-     : '<div class="empty">Nog geen sessies in deze filter.<br>Tik op <b>+</b> rechtsonder om te loggen.</div>');
+     : '<div class="empty">Nog geen sessies in deze filter.<br>Tik rechtsonder op 🎤 en spreek je training in.</div>');
   document.querySelectorAll('#view-log [data-filter]').forEach(b=>{
     b.onclick=()=>{ logFilter=b.dataset.filter; renderLog(); };
   });
@@ -1168,6 +1638,15 @@ function renderSettings(){
       '</div>'+
       '<div style="margin-top:16px"><button class="btn block" id="calAll">📅 Alle geplande trainingen exporteren ('+planned.length+')</button></div>'+
       '<div class="tiny muted" style="margin-top:10px;line-height:1.6">Op je iPhone opent het deelmenu — kies <b>Agenda</b> en daarna <b>Voeg alles toe</b>. Tip: zet ze in een aparte agenda "Training", dan kun je alles in één keer verbergen of wissen.</div>'+
+    '</div>'+
+
+    '<div class="card"><h2>🎤 Inspreken</h2>'+
+      '<div class="small muted" style="line-height:1.65">Tik rechtsonder op de microfoon en vertel gewoon wat je hebt gedaan. De app haalt er zelf soort, datum, duur, afstand, zwaarte en je krachtoefeningen uit. Noem je de naam van een opgeslagen training, dan wordt die er automatisch bij gepakt.<br><br>'+
+      '<b>Wat je kunt zeggen:</b></div>'+
+      '<div class="examples" style="margin-top:8px"><ul>'+VOICE_EXAMPLES.map(e=>'<li>'+esc(e)+'</li>').join('')+'</ul></div>'+
+      '<div class="tiny muted" style="margin-top:10px">Je krijgt altijd eerst te zien wat de app ervan begrepen heeft, en kunt het aanpassen voordat je opslaat. '+
+      (SpeechRec?'':'Let op: deze browser ondersteunt geen spraakherkenning — je kunt je training wel intypen of dicteren met de microfoontoets van je toetsenbord. ')+
+      'De herkenning loopt via je browser (Apple/Google), de rest gebeurt op je toestel.</div>'+
     '</div>'+
 
     '<div class="card"><h2>Data</h2>'+
@@ -1231,8 +1710,14 @@ function sheetHTML(html){
   sheet.querySelectorAll('[data-close]').forEach(b=>b.onclick=closeSheet);
   sheet.scrollTop=0;
   document.getElementById('modal').classList.add('open');
+  document.body.classList.add('noscroll');
 }
-function closeSheet(){ document.getElementById('modal').classList.remove('open'); form=null; tform=null; }
+function closeSheet(){
+  abortRecog();
+  document.getElementById('modal').classList.remove('open');
+  document.body.classList.remove('noscroll');
+  form=null; tform=null;
+}
 
 let currentView='dash';
 function setView(v){
@@ -1268,8 +1753,12 @@ function toast(msg){
 }
 
 document.querySelectorAll('nav.bottom button').forEach(b=> b.onclick=()=>setView(b.dataset.view));
-document.getElementById('fab').onclick=openPicker;
+document.getElementById('fabMic').onclick=openVoice;
+document.getElementById('fabAdd').onclick=openPicker;
 document.getElementById('modal').querySelector('.backdrop').onclick=closeSheet;
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape' && document.getElementById('modal').classList.contains('open')) closeSheet();
+});
 save();
 render();
 </script>
